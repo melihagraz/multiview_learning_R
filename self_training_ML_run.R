@@ -50,7 +50,7 @@ source("self_training_main.R")
 # method is Naive Bayes
 # feature selection method is FALSE
 # this means we are using all the features
-res1<- self_feb20(dataL, 
+res1<- self(dataL, 
                   dataU, 
                   method = "Naive Bayes", 
                   imbalanced=TRUE,
@@ -75,7 +75,7 @@ res1_fin
 # feature selection method is TRUE
 # this means, we are running the code on selected features
 
-res2<- self_feb20(dataL, 
+res2<- self(dataL, 
                   dataU, 
                   method = "Naive Bayes", 
                   imbalanced=TRUE,
@@ -98,7 +98,7 @@ res2_fin
 # method is Random Forest
 # feature selection method is TRUE
 
-res3<- self_feb20(dataL, 
+res3<- self(dataL, 
                   dataU, 
                   method = "Random Forest", 
                   imbalanced=TRUE,
@@ -119,7 +119,7 @@ res3_fin<-round(res3_fin,3)# Table 2 rows (Random Forest);
 # 2nd row. Medical Selected last iteration
 res3_fin 
 
-res4<- self_feb20(dataL, 
+res4<- self(dataL, 
                   dataU, 
                   method = "Random Forest", 
                   imbalanced=TRUE,
