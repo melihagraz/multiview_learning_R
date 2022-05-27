@@ -16,7 +16,7 @@ This project provides a template structure of folders and files for Multi-view L
 
 ### Example
 
-I want to run Logistic Regression, working on imbalanced data without feature selection with 5 fold cross validation. 
+If you want to run Logistic Regression, working on imbalanced data on train, without feature selection, with 5 fold cross validation. 
 
 ```{r setup1, include=FALSE}
 Baseline_Hyp(dataL = dataL, 
@@ -27,13 +27,13 @@ Baseline_Hyp(dataL = dataL,
 )
 ```
 
-or 
+If you want to run SVM, working on NOT imbalanced data, with LASSO feature selection, with 5 fold cross validation. 
 
 ```{r setup1, include=FALSE}
 Baseline_Hyp(dataL = dataL, 
                  method           = "SVM" ,
                  imbalanced       =  FALSE,
-                 feature_sel      =  "",
+                 feature_sel      =  "Lasso",
                  n_fold           =  5 
 )
 ```
