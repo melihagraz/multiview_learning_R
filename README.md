@@ -48,7 +48,32 @@ If you want to run all the combinations of ```method```, and ```feature_sel```, 
 Since we think that selected features from "MRMR" is the best, we are continuing  MRMR selected features. So if you want to continuous with MRMR selected features, you must type ```feature_sel=TRUE```. You can choose the number of folds by ```n_fold```, default is 5.
 
 
+### Example
 
+If you want to run self-training algorithm on Naive Bayes,  working on imbalanced data on for labeled (dataL) and unlabeled (dataU) data, without feature selection, with 5 fold cross validation, with 0.9 negative negative and positive pseudo selection . 
+
+```{r setup1, include=FALSE}
+self_feb20(dataL, 
+                  dataU, 
+                  method = "Naive Bayes", 
+                  imbalanced=TRUE,
+                  neg_conf_prob=0.9, 
+                  pos_conf_prob=0.1, 
+                  feature_sel=FALSE,
+                  n_fold=5
+)
+```
+
+If you want to run SVM, working on NOT imbalanced data, with LASSO feature selection, with 5-fold cross validation, you can run the code below.  
+
+```{r setup1, include=FALSE}
+Baseline_Hyp(dataL = dataL, 
+                 method           = "SVM" ,
+                 imbalanced       =  FALSE,
+                 feature_sel      =  "Lasso",
+                 n_fold           =  5 
+)
+```
 
 
 ## R Template Project
