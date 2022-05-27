@@ -12,7 +12,7 @@ This project provides a template structure of folders and files for Multi-view L
 
 ### Conventional Machine Learning (base_.R)
 
-```base_ML.main.R``` is the main code of the conventional machine learning. You can run Logisctic Regression, Naive Bayes, XGBoost, Support Vector Machine and Random Forest conventional Machine Learning models. If your data is imbalanced, you can balance your data with ```imbalanced=TRUE```. You can choose the number of folds by ```n_fold```, default is 5.  
+```base_ML.main.R``` is the main code of the conventional machine learning. You can run Logisctic Regression, Naive Bayes, XGBoost, Support Vector Machine and Random Forest conventional Machine Learning models. If your data is imbalanced, you can balance your data with ```imbalanced=TRUE```. You can choose the number of folds by ```n_fold```, default is 5.  We have already done the feature selection algorithm for ACCORD dataset and specified the selected features. For this reason, you can select these specified futures by typing ```feature_sel =  "Boruta"``` or ```feature_sel =  "Boruta"``` or ```feature_sel =  "Boruta"``` OR if you donot want to work on full ACCORD data, you can type ```feature_sel =  "NO FS"```.
 
 
 
