@@ -1,6 +1,7 @@
 ---
 title: "Base Learning, Self-Learning and Multi-view Learning"
-output: github_document
+author: "Melih Agraz"
+output:
 ---
 
 ## Description
