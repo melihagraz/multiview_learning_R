@@ -12,7 +12,7 @@ This project provides a template structure of folders and files for Multi-view L
 
 ## Conventional Machine Learning (base_.R)
 
-```base_ML.main.R``` is the main code of the conventional machine learning. You can run Logisctic Regression, Naive Bayes, XGBoost, Support Vector Machine and Random Forest conventional Machine Learning models. You can type ```method="Logisctic Regression"``` or ```method="Naive Bayes"``` or ```method="SVM"``` or ```method="Xgboost"``` or ```method="Random Forest"```.  If your data is imbalanced, you can balance your data with ```imbalanced=TRUE```. You can choose the number of folds by ```n_fold```, default is 5.  We have already done the feature selection algorithm for ACCORD dataset and specified the selected features. For this reason, you can select these specified futures by typing ```feature_sel =  "Boruta"``` or ```feature_sel =  "Boruta"``` or ```feature_sel =  "Boruta"``` OR if you want to work on only the full ACCORD data, you can type ```feature_sel =  "NO FS"```.
+```base_ML.main.R``` is the main code of the conventional machine learning. You can run Logisctic Regression, Naive Bayes, XGBoost, Support Vector Machine and Random Forest conventional Machine Learning models. You must type ```method="Logisctic Regression"``` or ```method="Naive Bayes"``` or ```method="SVM"``` or ```method="Xgboost"``` or ```method="Random Forest"``` to run conventional machine learning models.  If your data is imbalanced, you can balance your data with ```imbalanced=TRUE```. You can choose the number of folds by ```n_fold```, default is 5.  We have already done the feature selection algorithm for ACCORD dataset and specified the selected features. For this reason, you can select these specified features by typing ```feature_sel =  "Boruta"``` or ```feature_sel =  "Boruta"``` or ```feature_sel =  "Boruta"``` OR if you want to work on only the full ACCORD data, you can type ```feature_sel =  "NO FS"```.
 
 Column name of your response variable must be  ```out```.
 
@@ -29,7 +29,7 @@ Baseline_Hyp(dataL = dataL,
 )
 ```
 
-If you want to run SVM, working on NOT imbalanced data, with LASSO feature selection, with 5 fold cross validation, you can run the code below.  
+If you want to run SVM, working on NOT imbalanced data, with LASSO feature selection, with 5-fold cross validation, you can run the code below.  
 
 ```{r setup1, include=FALSE}
 Baseline_Hyp(dataL = dataL, 
@@ -43,7 +43,7 @@ Baseline_Hyp(dataL = dataL,
 If you want to run all the combinations of ```method```, and ```feature_sel```, you can go to the ```base_ML.run.R``` (it is not necessary).  
 
 ## Self Learning (self_.R)
-```self_ML.main.R``` is the main code of the self-learning algorithm. This code gives you an opportunity to run self learning algorithm only for Naive Bayes and Random Forest Model. 
+```self_ML.main.R``` is the main code of the self-learning algorithm. This code gives you an opportunity to run self learning algorithm only for Naive Bayes and Random Forest Model. You must type ```method="B-Naive Bayes"``` or ```method="Random Forest"``` to run machine learning models. 
 
 ## R Template Project
 
