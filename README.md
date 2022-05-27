@@ -53,14 +53,14 @@ Since we think that selected features from "MRMR" is the best, we are continuing
 If you want to run self-training algorithm on Naive Bayes,  working on imbalanced data on for labeled (dataL) and unlabeled (dataU) data, without feature selection, with 5 fold cross validation, with 0.9 negative negative and positive pseudo selection . 
 
 ```{r setup1, include=FALSE}
-self_feb20(dataL, 
-                  dataU, 
-                  method = "Naive Bayes", 
-                  imbalanced=TRUE,
-                  neg_conf_prob=0.9, 
-                  pos_conf_prob=0.1, 
-                  feature_sel=FALSE,
-                  n_fold=5
+self(dataL, 
+    dataU, 
+    method = "Naive Bayes", 
+    imbalanced=TRUE,
+    neg_conf_prob=0.9, 
+    pos_conf_prob=0.1, 
+    feature_sel=FALSE,
+    n_fold=5
 )
 ```
 
