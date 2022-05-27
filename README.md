@@ -64,6 +64,20 @@ self(dataL,
 )
 ```
 
+If you want to run self-training algorithm on Random Forest, working NOT imbalanced data on for labeled (dataL) and unlabeled (dataU) data, without feature selection, with 5 fold cross validation, with 0.8 negative negative and 0.7 positive pseudo selection . 
+
+```{r setup1, include=FALSE}
+self(dataL, 
+    dataU, 
+    method = "Random Forest", 
+    imbalanced=FALSE,
+    neg_conf_prob=0.8, 
+    pos_conf_prob=0.3, 
+    feature_sel=FALSE,
+    n_fold=5
+)
+```
+
 If you want to run SVM, working on NOT imbalanced data, with LASSO feature selection, with 5-fold cross validation, you can run the code below.  
 
 ```{r setup1, include=FALSE}
