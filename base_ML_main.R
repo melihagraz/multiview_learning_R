@@ -227,7 +227,7 @@ Baseline_Hyp <- function(dataL,
     }
     
     if(method == "SVM"){
-      #---------------------------------------------------------------# Bagging
+      #---------------------------------------------------------------# SVM
       
       svm1 <- train(as.factor(out) ~., 
                     data = trainset, 
