@@ -1,12 +1,13 @@
 ---
 title: "Base Learning, Self-Learning and Multi-view Learning"
 author: "Melih Agraz"
-output:
+output: R documents
 ---
 
 ## Description
 
-This project provides a template structure of folders and files for an R project.
+This project provides a template structure of folders and files for Multi-view Learning ACCORD Project. You are going to see 3 different code structures like base_ML_.R, self_ML_.R and CO_ML_.R. In base_ML
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
