@@ -7,8 +7,9 @@ output: R documents
 ## Description
 
 This project provides a template structure of folders and files for Multi-view Learning ACCORD Project. You are going to see 3 different code structures like ```base_ML_.R```, ```self_ML_.R``` and ```CO_ML_.R```. 
+```base_ML_.main.R```, ```self_ML_.main.R``` and ```CO_ML_.main.R``` are the main part of the conventional, self training and co-training of code,respectively and you have to run the ```base_ML_.run.R```, ```self_ML_.run.R``` and ```CO_ML_.run.R``` to run these codes.
 
-```base_ML.main.R``` is the main code of the conventional machine learning. You can run Logisctic Regression, Naive Bayes, XGBoost, Support Vector MAchine and Random Forest conventional Machine Learning models.
+```base_ML..R``` is the main code of the conventional machine learning. You can run Logisctic Regression, Naive Bayes, XGBoost, Support Vector Machine and Random Forest conventional Machine Learning models.
 
 
 ```{r setup, include=FALSE}
