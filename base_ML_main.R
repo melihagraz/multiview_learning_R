@@ -193,7 +193,7 @@ Baseline_Hyp <- function(dataL,
       head(trainset)
       x6<-which(colnames(trainset)=="out")
       
-      xgb_train <- as.matrix(trainset[-x6])
+      xgb_train <- data.matrix(trainset[-x6])
       xgb_trainlabel <- as.matrix(trainset$out)
       
       #xgboost model training
