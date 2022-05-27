@@ -1,6 +1,6 @@
 
 
-self_feb20  <- function(dataL,   dataU, 
+self  <- function(dataL,   dataU, 
                         method        = "Naive Bayes", 
                         imbalanced    = TRUE,
                         neg_conf_prob = 0.9, 
