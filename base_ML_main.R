@@ -115,7 +115,7 @@ Baseline_Hyp <- function(dataL,
     }
     
     method <- match.arg(method, choices=c("Naive Bayes", "Random Forest", "Logistic Regression",
-                                          "SVM", "Xgboost", "All"))
+                                          "SVM", "Xgboost"))
     
     if( !method%in%c("Naive Bayes", "Random Forest", "Logistic Regression",
                      "SVM", "Xgboost") ) 
