@@ -4,13 +4,13 @@ author: "Melih Agraz"
 output: R documents
 ---
 
-## Description
+# Description
 
 This project provides a template structure of folders and files for Multi-view Learning ACCORD Project. You are going to see 3 different code structures like ```base_ML_.R```, ```self_ML_.R``` and ```CO_ML_.R```. 
 
 ```base_ML_.main.R```, ```self_ML_.main.R``` and ```CO_ML_.main.R``` are the main part of the conventional, self training and co-training of code,respectively and you have to run the ```base_ML_.run.R```, ```self_ML_.run.R``` and ```CO_ML_.run.R``` to run the main codes. You can see detailed explanation of these three ```main``` and ```run``` code. 
 
-### Conventional Machine Learning (base_.R)
+## Conventional Machine Learning (base_.R)
 
 ```base_ML.main.R``` is the main code of the conventional machine learning. You can run Logisctic Regression, Naive Bayes, XGBoost, Support Vector Machine and Random Forest conventional Machine Learning models. If your data is imbalanced, you can balance your data with ```imbalanced=TRUE```. You can choose the number of folds by ```n_fold```, default is 5.  We have already done the feature selection algorithm for ACCORD dataset and specified the selected features. For this reason, you can select these specified futures by typing ```feature_sel =  "Boruta"``` or ```feature_sel =  "Boruta"``` or ```feature_sel =  "Boruta"``` OR if you want to work on only the full ACCORD data, you can type ```feature_sel =  "NO FS"```.
 
