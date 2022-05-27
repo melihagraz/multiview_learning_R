@@ -18,7 +18,6 @@ Baseline_Hyp <- function(dataL,
   if(!require(xgboost)){install.packages("xgboost");require(xgboost)}
   if(!require(ROSE)){install.packages("ROSE");require(ROSE)}
   if(!require(praznik)){install.packages("praznik");require(praznik)}
-  if(!require(e1071)){install.packages("e1071");require(e1071)}
   if(!require(gridExtra)){install.packages("gridExtra");require(gridExtra)}  
   if(!require(adabag)){install.packages("adabag");require(adabag)}  
   
