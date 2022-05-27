@@ -18,7 +18,7 @@ Column name of your response variable must be  ```out```.
 
 ### Example
 
-If you want to run Logistic Regression, working on imbalanced data on train, without feature selection, with 5 fold cross validation. 
+If you want to run Logistic Regression, working on imbalanced data on train, without feature selection, with 5 fold cross validation, you can run the code below. 
 
 ```{r setup1, include=FALSE}
 Baseline_Hyp(dataL = dataL, 
@@ -29,7 +29,7 @@ Baseline_Hyp(dataL = dataL,
 )
 ```
 
-If you want to run SVM, working on NOT imbalanced data, with LASSO feature selection, with 5 fold cross validation. 
+If you want to run SVM, working on NOT imbalanced data, with LASSO feature selection, with 5 fold cross validation, you can run the code below.  
 
 ```{r setup1, include=FALSE}
 Baseline_Hyp(dataL = dataL, 
@@ -40,7 +40,7 @@ Baseline_Hyp(dataL = dataL,
 )
 ```
 
-If you want to run the  ```main``` code, you could need```base_ML.run.R``` (it is not necessary).  
+You can see all the combination of ```method```, and ```feature_sel```, you can go to the ```base_ML.run.R``` (it is not necessary).  
 
 
 ```{r setup, include=FALSE}
