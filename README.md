@@ -1,5 +1,5 @@
 ---
-title: "Base Learning, Self-Learning and Multi-view Learning"
+title: "Base Learning, Self-Learning and Multi-view Learning on ACCORD Data"
 author: "Melih Agraz"
 output: R documents
 ---
@@ -12,7 +12,11 @@ This project provides a template structure of folders and files for Multi-view L
 
 ### Conventional Machine Learning (base_.R)
 
-```base_ML.main.R``` is the main code of the conventional machine learning. You can run Logisctic Regression, Naive Bayes, XGBoost, Support Vector Machine and Random Forest conventional Machine Learning models.
+```base_ML.main.R``` is the main code of the conventional machine learning. You can run Logisctic Regression, Naive Bayes, XGBoost, Support Vector Machine and Random Forest conventional Machine Learning models. If your data is imbalanced, you can balance your data with ```imbalanced=TRUE```. You can choose the number of folds by ```n_fold```, default is 5.  
+
+
+
+If you want to run the  ```main``` code, you could need```base_ML.run.R``` (it is not necessary).  
 
 
 ```{r setup, include=FALSE}
