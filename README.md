@@ -91,6 +91,41 @@ Since we think that selected features from "MRMR" is the best, we are continuing
 
 
 
+### Example
+
+If you want to run multi-view learning algorithm on Naive Bayes, working on imbalanced data on for labeled (lab) and unlabeled (unlabeled) data, with feature selection (MRMR selected features on ACCORD data), with 5 fold cross validation, with 7 negative confident features and 1 positive confident features, with 75 randomly selected unlabeled data for the unlabeled pool for 30 iterations. 
+
+```{r setup1, include=FALSE}
+          CoTrain_cv_errorBar(lab, unlabeled, 
+                              method = "Naive Bayes",
+                              train_prob = 0.8, 
+                              n_subPool=75, 
+                              n_iteration=30, 
+                              imbalanced=TRUE,
+                              feature_sel=TRUE,
+                              n_neg=7,
+                              n_pos=1,
+                              n_fold=5)
+)
+```
+
+
+
+If you want to run multi-view learning algorithm on Random Forest, working on imbalanced data on for labeled (lab) and unlabeled (unlabeled) data, with feature selection (MRMR selected features on ACCORD data), with 5 fold cross validation, with 5 negative confident features and 1 positive confident features, with 75 randomly selected unlabeled data for the unlabeled pool for 30 iterations. 
+
+```{r setup1, include=FALSE}
+          CoTrain_cv_errorBar(lab, unlabeled, 
+                              method = "Random Forest",
+                              train_prob = 0.8, 
+                              n_subPool=75, 
+                              n_iteration=30, 
+                              imbalanced=TRUE,
+                              feature_sel=TRUE,
+                              n_neg=5,
+                              n_pos=1,
+                              n_fold=5)
+)
+```
 
 ## R Template Project
 
