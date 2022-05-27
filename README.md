@@ -17,7 +17,7 @@ This project provides a structure of folders and files for Multi-view Learning A
 !!Column name of your response variable must be  ```out```.
 
 
-###Requirements
+### Requirements
 
 You must install the related packages below.
 
@@ -57,7 +57,7 @@ If you want to run all the combinations of ```method```, and ```feature_sel```, 
 
 Since we think that "MRMR" selected features are the best, we are continuing self-learning algorithm on  MRMR selected features. So if you want to continue with MRMR selected features, you must type ```feature_sel=TRUE```. You can choose the number of folds by ```n_fold```, default is 5.
 
-###Requirements
+### Requirements
 
 You must install the related packages below.
 
@@ -112,7 +112,7 @@ If your data is imbalanced, you must type ```imbalanced=TRUE``` to fix it, other
 Since we think that selected features from "MRMR" is the best, we are continuing  MRMR selected features. So if you want to continuous with MRMR selected features, you must type ```feature_sel=TRUE```. You can choose the number of folds by ```n_fold```, default is 5.
 
 
-###Requirements
+### Requirements
 
 You must install the related packages below.
 
