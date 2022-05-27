@@ -18,7 +18,7 @@ This project provides a structure of folders and files for Multi-view Learning A
 
 ### Example
 
-If you want to run Logistic Regression, working on imbalanced data on train, without feature selection, with 5 fold cross validation, you can run the code below. 
+If you want to run Logistic Regression,  on imbalanced data on training set, without feature selection, with 5 fold cross validation, you can run the code below. 
 
 ```{r setup1, include=FALSE}
 Baseline_Hyp(dataL = dataL, 
