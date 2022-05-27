@@ -1,7 +1,11 @@
 ---
-title: "README"
+title: "Base Learning, Self-Learning and Multi-view Learning"
 output: github_document
 ---
+
+## Description
+
+This project provides a template structure of folders and files for an R project.
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
