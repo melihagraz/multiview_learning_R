@@ -78,16 +78,18 @@ self(dataL,
 )
 ```
 
-If you want to run SVM, working on NOT imbalanced data, with LASSO feature selection, with 5-fold cross validation, you can run the code below.  
+If you want to run all the combinations of ```method```, and ```feature_sel```, you can go to the ```self_ML.run.R``` (it is not necessary).  
 
-```{r setup1, include=FALSE}
-Baseline_Hyp(dataL = dataL, 
-                 method           = "SVM" ,
-                 imbalanced       =  FALSE,
-                 feature_sel      =  "Lasso",
-                 n_fold           =  5 
-)
-```
+
+## Multi-view Learning (CO_.R)
+```CO_training_ML.main.R``` is the main code of the multi-view co training learning algorithm. This code gives you an opportunity to run multi-view learning algorithm only for Naive Bayes and Random Forest Model. You must type ```method="Naive Bayes"``` or ```method="Random Forest"``` to run machine learning models. You can split the  data as train/test with typing ```train_prob = 0.8``` with the 80% percentage as default.  Number of subpool from the unlabeled data can be assigned as```n_subPool=75 ``` and number of iteration is fixed  as ```n_iteration=30```.  If your data is imbalanced, you must type ```imbalanced=TRUE```, otherwise ```imbalanced=FALSE```. If you want to continuous with MRMR selected features, you must type ```feature_sel=TRUE```. You can choose the number of folds by ```n_fold```, default is 5. You can specify how many negative and positive confident pseudo features can be selected by typing ```n_neg``` and ```n_pos```, respectively. 
+
+
+If your data is imbalanced, you must type ```imbalanced=TRUE```, otherwise ```imbalanced=FALSE```. ```neg_conf_prob``` is a threshold probability for the negative pseudo-labeled class, i.e. the ones with the higher then ```neg_conf_prob``` will be labeled as "pseudo labels" in negative class. ```pos_conf_prob``` is a threshold probability for the positive pseudo labeled class. Default values are ```neg_conf_prob=0.9``` and ```pos_conf_prob=0.1```, so we are selecting the pseudo classes which is higher than 0.9 for both negative and positive classes. 
+
+Since we think that selected features from "MRMR" is the best, we are continuing  MRMR selected features. So if you want to continuous with MRMR selected features, you must type ```feature_sel=TRUE```. You can choose the number of folds by ```n_fold```, default is 5.
+
+
 
 
 ## R Template Project
