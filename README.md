@@ -35,9 +35,18 @@ Baseline_Hyp(dataL = dataL,
                  method           = "Logistic Regression" ,
                  imbalanced       =  TRUE,
                  feature_sel      =  "NO FS",
-                 n_fold           =  5 
+                 n_fold           =  5 s
 )
 ```
+So the output will be confusion matrix like below.
+
+
+```{r setup1, include=FALSE}
+           NPV       PPV      Spec      Sens       Acc        F1
+[1,] 0.9130425 0.1835661 0.5912669 0.6118235 0.5943996 0.2803637
+
+```
+
 
 If you want to run SVM, working on NOT imbalanced data, with LASSO feature selection, with 5-fold cross validation, you can run the code below.  
 
