@@ -158,7 +158,33 @@ If you want to run multi-view learning algorithm on Naive Bayes, working on imba
                               n_fold=5)
 )
 ```
+It will give the confusion matrix of the first, last iterations and percentage of gain/loss of these iterations. 
 
+```{r setup1, include=FALSE}
+first_last
+                    Sen_v1    Sen_v2  Spec_v1  Spec_v2   PPV_v1      PPV_v2     NPV_v1    NPV_v2     F1_v1
+first_iteration    0.31386   0.60936  0.80424  0.57018 0.191900   0.1723400  0.8874400  0.910180   0.23316
+second iteration   0.19850   0.07302  0.88788  0.94098 0.202560   0.1333333  0.8819800  0.873100   0.19658
+percentage       -36.75524 -88.01694 10.39988 65.03210 5.554977 -22.6335538 -0.6152529 -4.073919 -15.68880
+                       F1_v2   Acc_v1   Acc_v2 BalAcc_v1 BalAcc_v2
+first_iteration    0.2671800 0.739840  0.57484  0.559060   0.58976
+second iteration   0.1194667 0.798520  0.82826  0.543180   0.50700
+percentage       -55.2860743 7.931445 44.08531 -2.840482 -14.03283
+)
+```
+
+In addition to that, you can receive the AND/OR rule concatenated results of View 1 and View2 and Figures of each confusion matrix.
+
+```{r setup1, include=FALSE}
+Conc_AND
+  NPV    PPV   Spec    Sen    Acc     F1
+1 0.8726 0.2143 0.9893 0.0199 0.8648 0.0364
+
+Conc_OR
+     NPV    PPV  Spec    Sen    Acc     F1
+1 0.8821 0.1791 0.839 0.2384 0.7619 0.2045
+
+```
 
 
 If you want to run multi-view learning algorithm on Random Forest, working on imbalanced data on labeled (lab) and unlabeled (unlabeled) data, with feature selection (MRMR selected features on ACCORD data), with 5 fold cross validation, with 5 negative confidence features and 1 positive confidence features, with 75 randomly selected unlabeled data for the unlabeled pool for 30 iterations. 
