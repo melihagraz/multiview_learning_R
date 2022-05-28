@@ -141,7 +141,6 @@ install.packages(c("caret", "ggplot2", "rpart", "dplyr",randomForest",  "e1071",
  "praznik", "gridExtra", "PRROC"))
 ```
 
-
 ### Example
 
 If you want to run multi-view learning algorithm on Naive Bayes, working on imbalanced data on labeled (lab) and unlabeled (unlabeled) data, with feature selection (MRMR selected features on ACCORD data), with 5 fold cross validation, with 7 negative confidence features and 1 positive confidence features, with 75 randomly selected unlabeled data for the unlabeled pool for 30 iterations. 
