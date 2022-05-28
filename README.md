@@ -38,7 +38,7 @@ Baseline_Hyp(dataL = dataL,
                  n_fold           =  5 s
 )
 ```
-So the output will be confusion matrix like below.
+So the output will be the confusion matrix like below.
 
 
 ```{r setup1, include=FALSE}
@@ -94,6 +94,17 @@ self(dataL,
     n_fold=5
 )
 ```
+
+So the output will be the confusion matrix like below.
+
+```{r setup1, include=FALSE}
+                Sensitivity Specificity       PPV      NPV      Acc        F1    BalAcc
+First iteration     0.97904     0.03816  0.130600  0.92444  0.15898  0.230200  0.508600
+Last iteration      0.86510     0.13326  0.127160  0.90042  0.22794  0.221320  0.499220
+Percentage        -11.63793   249.21384 -2.633997 -2.59833 43.37653 -3.857515 -1.844278
+```
+
+
 
 If you want to run self-training algorithm on Random Forest, working NOT imbalanced data on labeled (dataL) and unlabeled (dataU) data, without feature selection, with 5 fold cross validation, with 0.8 negative negative and 0.7 confident positive pseudo selection . 
 
