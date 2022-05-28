@@ -95,7 +95,7 @@ self(dataL,
 )
 ```
 
-So the output will be the confusion matrix like below.
+So the output will be the confusion matrix like below. This out gives us, the confusion matrix of the first iteration and the last iteration and the percentage gain or loss. 
 
 ```{r setup1, include=FALSE}
                 Sensitivity Specificity       PPV      NPV      Acc        F1    BalAcc
