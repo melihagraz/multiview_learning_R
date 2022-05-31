@@ -35,7 +35,7 @@ Baseline_Hyp(dataL = dataL,
                  method           = "Logistic Regression" ,
                  imbalanced       =  TRUE,
                  feature_sel      =  "NO FS",
-                 n_fold           =  5 s
+                 n_fold           =  5 
 )
 ```
 So the output will be the confusion matrix like below.
