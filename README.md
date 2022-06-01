@@ -68,6 +68,7 @@ If you want to run all the combinations of ```method```, and ```feature_sel```, 
 ## Self-training Machine Learning (self_.R)
 ```self_ML.main.R``` is the main code of the self-learning algorithm. This code gives you an opportunity to run self learning algorithm only for Naive Bayes and Random Forest Model. You must type ```method="Naive Bayes"``` or ```method="Random Forest"``` to run machine learning models. If your data is imbalanced, you must type ```imbalanced=TRUE``` to fix it, otherwise ```imbalanced=FALSE```. ```neg_conf_prob``` is a threshold probability for the negative pseudo-labeled class, i.e. the ones with the higher then ```neg_conf_prob``` will be labeled as confidence "pseudo labels" in negative class. ```pos_conf_prob``` is a threshold probability for the positive pseudo labeled class. Default values are ```neg_conf_prob=0.9``` and ```pos_conf_prob=0.1```, so we are selecting the confidence pseudo classes, if the pseudo-classes are higher than 0.9 for both negative and positive classes. 
 
+You can see the Self-training Machine Learning model steps for cross validation.
 <img width="739" alt="a2" src="https://user-images.githubusercontent.com/37498443/171392461-c1c5ceb7-483e-4004-9d61-1209143c071d.png">
 
 Since we think that "MRMR" selected features are the best, we are continuing self-learning algorithm on  MRMR selected features. So if you want to continue with MRMR selected features, you must type ```feature_sel=TRUE```. You can choose the number of folds by ```n_fold```, default is 5.
@@ -132,7 +133,7 @@ If you want to run all the combinations of ```method```, and ```feature_sel```, 
 ## Multi-view Co-training Machine Learning model (CO_.R)
 ```CO_training_ML.main.R``` is the main code of the multi-view co training learning algorithm. This code is written according to Blum.  This code gives you an opportunity to run multi-view learning algorithm only for Naive Bayes and Random Forest Model. You must type ```method="Naive Bayes"``` or ```method="Random Forest"``` to run machine learning models. You can split the  data as train/test with typing ```train_prob = 0.8```.  Number of pool from the unlabeled data can be assigned typing as```n_subPool=75 ``` and number of iteration is fixed  as 30 as typing ```n_iteration=30```.  If your data is imbalanced, you must type ```imbalanced=TRUE``` to fix it, otherwise ```imbalanced=FALSE```. If you want to continuous with MRMR selected features, you must type ```feature_sel=TRUE```. You can choose the number of folds by ```n_fold```, default is 5. You can specify how many negative and positive confidence pseudo features can be selected by typing ```n_neg``` and ```n_pos```, respectively. 
 
-You can see the Multi-view Co-training Machine Learning model steps for cross validation
+You can see the Multi-view Co-training Machine Learning model steps for cross validation.
 
 <img width="734" alt="a3" src="https://user-images.githubusercontent.com/37498443/171393351-5a223686-c7f3-4e1e-aa45-f6ff32cb8783.png">
 
