@@ -198,6 +198,7 @@ Conc_OR
 
 ```
 
+<img width="426" alt="c1" src="https://user-images.githubusercontent.com/37498443/171415493-45da71f9-a608-48d6-b9d7-210df389d8dc.png">
 
 If you want to run multi-view learning algorithm on Random Forest, working on imbalanced data on labeled (lab) and unlabeled (unlabeled) data, with feature selection (MRMR selected features on ACCORD data), with 5 fold cross validation, with 5 negative confidence features and 1 positive confidence features, with 75 randomly selected unlabeled data for the unlabeled pool for 30 iterations. 
 
