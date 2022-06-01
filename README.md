@@ -6,7 +6,9 @@ output: R documents
 
 # Description
 
-This project provides a structure of folders and files for Multi-view Learning ACCORD Project. You can see 3 different codes structure  like; ```base_ML_.R```; conventional machine learning analysis part, 
+This project provides a structure of folders and files for Multi-view Learning ACCORD Project. You can see 3 different codes structure  like;
+
+```base_ML_.R```; conventional machine learning analysis part, 
 
 ```self_ML_.R```; self-training machine learning part and   
 
