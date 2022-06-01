@@ -212,4 +212,5 @@ If you want to run multi-view learning algorithm on Random Forest, working on im
 )
 ```
 -------------------------------- Reference------------------------------------
-[1]
+
+[1] Blum, A and Mitchel, T. Combining Labeled and Unlabeled Data with Co-Training, Proceedings of the eleventh annual conference on Computational learning theory (1998).
