@@ -125,8 +125,10 @@ self(dataL,
 If you want to run all the combinations of ```method```, and ```feature_sel```, you can go to the ```self_ML.run.R``` (it is not necessary).  
 
 
-## Multi-view Learning (CO_.R)
-```CO_training_ML.main.R``` is the main code of the multi-view co training learning algorithm. This code gives you an opportunity to run multi-view learning algorithm only for Naive Bayes and Random Forest Model. You must type ```method="Naive Bayes"``` or ```method="Random Forest"``` to run machine learning models. You can split the  data as train/test with typing ```train_prob = 0.8```.  Number of pool from the unlabeled data can be assigned typing as```n_subPool=75 ``` and number of iteration is fixed  as 30 as typing ```n_iteration=30```.  If your data is imbalanced, you must type ```imbalanced=TRUE``` to fix it, otherwise ```imbalanced=FALSE```. If you want to continuous with MRMR selected features, you must type ```feature_sel=TRUE```. You can choose the number of folds by ```n_fold```, default is 5. You can specify how many negative and positive confidence pseudo features can be selected by typing ```n_neg``` and ```n_pos```, respectively. 
+## Multi-view Co-training Machine Learning model (CO_.R)
+```CO_training_ML.main.R``` is the main code of the multi-view co training learning algorithm. This code is written according to Blum.  This code gives you an opportunity to run multi-view learning algorithm only for Naive Bayes and Random Forest Model. You must type ```method="Naive Bayes"``` or ```method="Random Forest"``` to run machine learning models. You can split the  data as train/test with typing ```train_prob = 0.8```.  Number of pool from the unlabeled data can be assigned typing as```n_subPool=75 ``` and number of iteration is fixed  as 30 as typing ```n_iteration=30```.  If your data is imbalanced, you must type ```imbalanced=TRUE``` to fix it, otherwise ```imbalanced=FALSE```. If you want to continuous with MRMR selected features, you must type ```feature_sel=TRUE```. You can choose the number of folds by ```n_fold```, default is 5. You can specify how many negative and positive confidence pseudo features can be selected by typing ```n_neg``` and ```n_pos```, respectively. 
+
+You can see the Multi-view Co-training Machine Learning model steps for cross validation
 
 <img width="734" alt="a3" src="https://user-images.githubusercontent.com/37498443/171393351-5a223686-c7f3-4e1e-aa45-f6ff32cb8783.png">
 
@@ -204,3 +206,5 @@ If you want to run multi-view learning algorithm on Random Forest, working on im
                               n_fold=5)
 )
 ```
+-------------------------------- Reference------------------------------------
+[1]
