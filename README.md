@@ -71,7 +71,8 @@ If you want to run all the combinations of ```method```, and ```feature_sel```, 
 ```self_ML.main.R``` is the main code of the self-learning algorithm. This code gives you an opportunity to run self learning algorithm only for Naive Bayes and Random Forest Model. You must type ```method="Naive Bayes"``` or ```method="Random Forest"``` to run machine learning models. If your data is imbalanced, you must type ```imbalanced=TRUE``` to fix it, otherwise ```imbalanced=FALSE```. ```neg_conf_prob``` is a threshold probability for the negative pseudo-labeled class, i.e. the ones with the higher then ```neg_conf_prob``` will be labeled as confidence "pseudo labels" in negative class. ```pos_conf_prob``` is a threshold probability for the positive pseudo labeled class. Default values are ```neg_conf_prob=0.9``` and ```pos_conf_prob=0.1```, so we are selecting the confidence pseudo classes, if the pseudo-classes are higher than 0.9 for both negative and positive classes. 
 
 You can see the Self-training Machine Learning model steps for cross validation.
-<img width="739" alt="a2" src="https://user-images.githubusercontent.com/37498443/171392461-c1c5ceb7-483e-4004-9d61-1209143c071d.png">
+
+<img width="655" alt="b1" src="https://user-images.githubusercontent.com/37498443/171413929-2e52037f-e343-42b3-98da-cf002bfd80a7.png">
 
 Since we think that "MRMR" selected features are the best, we are continuing self-learning algorithm on  MRMR selected features. So if you want to continue with MRMR selected features, you must type ```feature_sel=TRUE```. You can choose the number of folds by ```n_fold```, default is 5.
 
