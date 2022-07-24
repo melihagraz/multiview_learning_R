@@ -51,6 +51,8 @@ self  <- function(dataL, dataU, method = c("nb", "rf"), imbalanced = TRUE,
                   neg_conf_prob = 0.9, pos_conf_prob = 0.1, feature_sel = TRUE,
                   n_fold = 5, seed = 123,...) {
 
+  #--------- you can use below code to install required packages or above code
+  # 
   requiredLibs <- c("dplyr", "caret", "randomForest", "ggplot2", "ggpubr",
                     "ROSE", "praznik", "e1071", "gridExtra", "PRROC")
 
@@ -60,7 +62,8 @@ self  <- function(dataL, dataU, method = c("nb", "rf"), imbalanced = TRUE,
       require(pkg)
     }
   }
-
+#------------------------
+  
   ###checking data
   if (missing(dataL))
     stop("labeled/unlabeled data is reaquired.\n")
