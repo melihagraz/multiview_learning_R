@@ -1,0 +1,539 @@
+#' below contains auxiliary functions to the main functions (base.R, self.R, Co.R)
+#'  in the
+#'                       MULTIVIEW COTRAINING PROJECT
+
+
+
+
+#------------------------------------------------------------------------------- BALANCED CO
+#' @title Undersampling Algorithms for Imbalanced Classification for Co training
+#'
+#' @description
+#' This method ensures that the imbalanced data is balanced with the
+#' undersampling method with \code{balanced_Co} code.
+#'
+#' @param data1 View1 we want to balanced
+#' @param data2 View2 want to balanced
+#' @param seed a positive integer. It is used to control random number
+#' generating steps. If not NULL, folds are randomly generated using the
+#' user-defined seed value. It might be usefull to select the same folds and
+#' compare multiple models using the same cross-validation folds. Default is
+#' NULL, i.e., unrestricted.
+#' @param ... further arguments. Currently ignored.
+#'
+#' @return a list with elements \code{view1} and \code{view2} that corresponds
+#' to the balanced data sets.
+#'
+#' @examples
+#' 1L
+#'
+#' @export
+
+balanced_Co <- function(data1, data2, seed = NULL, ...){
+  imbal_dat1 <- data1
+  imbal_dat2 <- data2
+
+  xx <- table(imbal_dat1$out)
+  maj_cl <- numeric()
+
+  if (table(imbal_dat1$out)[[1]] > table(imbal_dat1$out)[[2]]){
+    maj_cl = as.numeric(names(xx)[1])
+  } else {
+    maj_cl = as.numeric(names(xx)[2])
+  }
+
+  min_val <- numeric()
+  if (table(imbal_dat1$out)[[1]] < table(imbal_dat1$out)[[2]]){
+    min_val = table(imbal_dat1$out)[[1]]
+  } else {
+    min_val = table(imbal_dat1$out)[[2]]
+  }
+
+  if (!is.null(seed)){
+    set.seed(seed)
+  }
+
+  maj_imbal_res <- sample(which(imbal_dat1$out == maj_cl), min_val)
+  min_imbal_res <- which(imbal_dat1$out != maj_cl)
+  imb_fin <- c(maj_imbal_res, min_imbal_res)
+  fin_dat1 <- imbal_dat1[imb_fin, ]
+
+  train_view1 <- fin_dat1
+  train_view2 <- imbal_dat2[imb_fin, ]
+
+  return(list(view1 = train_view1, view2 = train_view2))
+}
+
+#------------------------------------------------------------------------------- BALANCED SELF
+#' @title Undersampling Algorithms for Imbalanced Classification for self training
+#'
+#' @description
+#' This method ensures that the imbalanced data is balanced with the
+#' undersampling method with \code{balanced} code.
+#'
+#' @param data we want to balanced
+#' @param seed a positive integer. It is used to control random number
+#' generating steps. If not NULL, #' folds are randomly generated using the
+#' user-defined seed value. It might be #' usefull to select the same folds
+#' and compare multiple models using the same cross-validation folds. Default
+#' is NULL, i.e., unrestricted.
+#' @param ... further arguments. Currently ignored.
+#'
+#' @return balanced data
+#'
+#' @examples
+#' 1L
+#'
+#' @export
+balanced <- function(data, seed = NULL, ...){
+  xx <- table(data$out)
+  maj_cl <- numeric()
+
+  if (table(data$out)[[1]] > table(data$out)[[2]]) {
+    maj_cl = as.numeric(names(xx)[1])
+  } else{
+    maj_cl = as.numeric(names(xx)[2])
+  }
+
+  min_val <- numeric()
+  if (table(data$out)[[1]] < table(data$out)[[2]]) {
+    min_val = table(data$out)[[1]]
+  } else{
+    min_val = table(data$out)[[2]]
+  }
+
+  if (!is.null(seed)){
+    set.seed(seed)
+  }
+
+  maj_imbal_res <- sample(which(data$out == maj_cl), min_val)
+  min_imbal_res <- which(data$out != maj_cl)
+  imb_fin <- c(maj_imbal_res, min_imbal_res)
+  fin_dat <- data[imb_fin, ]
+  train <- fin_dat
+
+  return(train)
+}
+
+#------------------------------------------------------------------------------- DATA SUMMARY
+
+
+#' @title Summary of the Data
+#'
+#' @description
+#' This \code{data_summary} calculates the mean and standard deviation of the
+#' columns of each data and the index of the observations.
+#'
+#' @param data dataset, can be data.frame or matrix
+#
+#' @return tabulated data with number of iterations, mean and standard deviation
+#'
+#' @examples
+#' data_summary(matrix(c(1:12), 3))
+#'
+#' @export
+
+data_summary<-function(data){
+  ncol<-dim(data)[2]
+  data_mean_sd<-data.frame(iterations=c(1:ncol),
+                           Mean=c(apply(data,2, mean,na.rm=TRUE)),
+                           Sd=c(apply(data,2,sd,na.rm=TRUE)))
+  return(data_mean_sd)
+
+}
+
+
+#-------------------------------------------------------------------------------  FEATURE SELECTION
+
+#' @title Feature Selection Algorithms: Lasso & Boruta
+#'
+#' @description
+#' This method select the optimal features with \code{feature_selection} code.
+#'
+#' @param data dataset
+#' @param feature_sel runs Lasso or Boruta feature selection methods
+#' @return saved plot
+#'
+#' @examples
+#' feature_selection(data,method = "Lasso" )
+#'
+#' @export
+
+
+
+feature_selection <- function(data, method = c("Lasso", "Boruta"),... ){
+  #---------------------------------------------------------------------library
+
+  if(!require(dplyr)){install.packages("dplyr");require(dplyr)}
+  if(!require(glmnet)){install.packages("glmnet");require(glmnet)}
+  if(!require(Boruta)){install.packages("Boruta");require(Boruta)}
+
+  #-----------------------------------------------------------------------LASSO FS
+
+  if (method == "Lasso") {
+    #define response variable
+    y <- data$out
+
+    x <- data.matrix(data %>% select(-out))
+
+    cv_model <- cv.glmnet(x, y, alpha = 1)
+
+    best_lambda <- cv_model$lambda.min
+    best_lambda
+
+    plot(cv_model)
+
+    best_model <- glmnet(x, y, alpha = 1, lambda = best_lambda)
+    pos_col <- which(coef(best_model) != 0) - 1
+    fin_sel <- colnames(x)[pos_col]
+
+  } else{
+    #------------------------------------------------------------------------ BORUTA
+
+
+    boruta_output <- Boruta(out ~ ., data = data, doTrace = 2,
+                            maxRuns = 200) # to get stable results we need high
+    #number of iterations
+
+    boruta_signif <-
+      getSelectedAttributes(boruta_output, withTentative = TRUE)
+
+
+    fin_sel<- cat(paste(shQuote(boruta_signif, type = "cmd")))
+
+    plot(
+      boruta_output,
+      cex.axis = .7,
+      las = 2,
+      xlab = "",
+      main = "Variable Importance"
+    )
+
+
+
+  }
+  return(fin_sel)
+
+}
+
+
+#------------------------------------------------------------------------------- PLOT CO
+
+#' @title Plot and Saver of Multiview Cotraining Algorithm
+#'
+#' @description you can draw graphs and save the results with the
+#'  \code{plot_Co} function.
+#'
+#' @param data dataset
+
+#' @param name name of the accuracy measures of confusion matrix;
+#' "Sensitivity", "Specificity", "PPV", "NPV", "Accuracy","BalancedAccuracy",
+#'  "F1", "TP", "TN","FP", "FN"
+#' @param  method which ML are we working on, Naive Bayes(nb) or Random Forest(rf).
+#' @param format file format ".pdf" or ".csv"
+#' @return .pdf or .csv file and graph
+#'
+#' @examples
+#'# basic usage of plot_Co
+#'plot_Co(data, name="Sensitivity",method = "nb", format = ".pdf" )
+#'
+#'-
+#'
+#' @export
+
+
+
+plot_Co <-function(data, name = c( "Sensitivity", "Specificity", "PPV", "NPV",
+                                   "Accuracy","BalancedAccuracy", "F1", "TP", "TN",
+                                   "FP", "FN"),
+                   method = c("nb", "rf"), format = c(".pdf", ".csv")) {
+
+  Iterations <- data$Iterations
+  Mean <- data$Mean
+  View <- data$View
+  Sd <- data$Sd
+
+  Sen_pl <-
+    ggplot(data, aes(
+      x = Iterations,
+      y = Mean,
+      group = View,
+      color = View)) +
+    geom_errorbar(aes(ymin = Mean - Sd, ymax = Mean + Sd), width = .1) +
+    geom_line() + geom_point() +
+    scale_color_brewer(palette = "Paired") + theme_minimal() + ylab(name) +
+    theme_bw() + ylim(0, 1)
+
+  Sen_pl <- Sen_pl +  theme(text = element_text(size = 20))
+
+  if (method == "nb") {
+    if (feature_sel == TRUE) {
+      ggsave(
+        paste0("2", "CO", "_", method, "_", name, "_FS", format))
+
+    } else{
+      ggsave(
+        paste0("1", "CO", "_", method, "_", name, "_MedSel", format))
+
+    }
+  } else{
+    if (feature_sel == TRUE) {
+      gsave(
+        paste0("4", "CO", "_", method, "_", name, "_FS", format))
+
+    } else{
+      ggsave(
+        paste0("3", "CO", "_", method, "_", name, "_MedSel", format))
+      ggsave("3CO_RF_Sen_MedSel.pdf")
+    }
+  }
+
+}
+
+
+#------------------------------------------------------------------------------- SAVER-self
+#' @title Saver for the Output of Graphics and csv Files
+#'
+#' @description
+#' This method saves the outputs of plots and confusion matrix through
+#'  \code{saver} code.
+#'
+#' @param name how do you want to define your output? For instance:
+#' if you want to save the first and last iterations of result, you can say
+#' "Firstlast"
+#' @param format file format ".pdf" or ".csv"
+#' @param main_method which method are you working on? conventional ("base"),
+#' self-learning ( "self"), multi-view-co training ("COV1": Co learning V1 or
+#' "COV2" )
+#' @param method machine learning methods that we are applying "nb"or "rf"
+#' @param feature_sel what features do you want to continuou with?
+#' Selected features or medically selected features
+#' @return saved plot
+#'
+#' @examples
+#' 1L
+#'
+#' @export
+
+
+
+saver <- function(data,  name="name_of_code",   format = c(".pdf", ".csv"),
+                  main_method = c("self","COV1", "COV2"),
+                  method = c("nb", "rf"), feature_sel = TRUE){
+
+  method <- match.arg(method)
+  if(format==".pdf"){
+    if (method == "nb") {
+      if (feature_sel == TRUE) {
+        ggsave(paste0("2", main_method, "_", method, "_", name, "_FS",
+                      format))
+      } else {
+
+        ggsave(paste0("1", main_method, "_", method, "_", name,
+                      "_MedicalSelected", format) )
+      }
+    } else {
+      if (feature_sel == TRUE) {
+        ggsave(paste0("4", main_method, "_", method, "_", name, "_FS",
+                      format))
+      } else {
+        ggsave(paste0("3", main_method, "_", method, "_", name,
+                      "_MedicalSelected", format) )
+      }
+    }
+  }else{
+    if (method == "nb") {
+      if (feature_sel == TRUE) {
+        write.csv(data, paste0("2", main_method, "_", method, "_", name, "_FS",
+                               format))
+      } else {
+
+        write.csv(data, paste0("1", main_method, "_", method, "_", name,
+                               "_MedicalSelected", format) )
+      }
+    } else {
+      if (feature_sel == TRUE) {
+        write.csv(data,paste0("4", main_method, "_", method, "_", name,
+                              "_FS", format))
+      } else {
+        write.csv(data, paste0("3", main_method, "_", method, "_", name,
+                               "_MedicalSelected", format) )
+      }
+    }
+
+  }
+
+}
+
+
+
+#------------------------------------------------------------------------------- PLOT SELF
+#' @title plot for self trainin
+#'
+#' @description
+#' This is a \code{plot_self} function prepared for drawing and saving the figures.
+#'
+#' @param data Default dataset to use for plot.
+#' @param name accuracy measures of confusion matrix:
+#'  c("Sensitivity", "Specificity", "PPV",
+#'  "NPV", "Accuracy", "BalancedAccuracy","F1","TP","TN","FP","FN")
+#' @param number_iterations number of iterations in the self and co training methods
+#' @param method Machine Learning models;
+#'   Naive Bayes (nb), Random Forest (rf)
+#' @param feature_sel optimal features, selected from the conventional machine
+#' learning model
+#' @param main_method which algorithm we are using ?
+#' only working for "self" learning
+#' @return plot and saved plot
+#'
+#' @examples
+#'plot_self <- function(data, name = "Sensitivity", number_iterations = Nit,
+#' method ="nb", feature_sel = TRUE, main_method = "self",  format = ".pdf")
+#'
+#' @export
+
+plot_self <- function(data, name = c("Sensitivity", "Specificity", "PPV", "NPV",
+                                     "Accuracy", "BalancedAccuracy", "F1","TP",
+                                     "TN","FP","FN"),
+                      number_iterations = Nit,
+                      method = c("nb", "rf"),
+                      feature_sel = TRUE,
+                      main_method = "self",  format = ".pdf"){
+
+  name <- match.arg(name)
+
+  Mean<-data$Mean
+  iterations<-data$iterations
+  Sd<-data$Sd
+
+  if (name %in% c("Sensitivity", "Specificity","PPV", "NPV",
+                  "Accuracy","BalancedAccuracy", "F1")){
+    Sen_pl <- ggplot(data = data,
+                     aes(x = iterations, y = Mean)) +
+      geom_line() +
+      geom_errorbar(aes(ymin = Mean - Sd,
+                        ymax = Mean + Sd),
+                    width = 0.2,
+                    position = position_dodge(0.9)) +
+      ylim(-0.2, 1.2) +
+      ylab(name) +
+      theme_bw() +
+      theme(text = element_text(size = 20))
+
+
+    if (method == "nb") {
+      if (feature_sel == TRUE) {
+        ggsave(paste0("2", main_method, "_",  name,
+                      "_FS", format))
+      } else{
+        ggsave(paste0("1", main_method, "_",  name,
+                      "_MedSel", format))
+
+      }
+    } else{
+
+      if (feature_sel == TRUE) {
+        ggsave(paste0("4", main_method, "_",  name,
+                      "_FS", format))
+      } else{
+        ggsave(paste0("3", main_method, "_",  name,
+                      "_MedSel", format))
+      }
+    }
+  } else{
+
+    Sen_pl <- ggplot(data = data, aes(x = iterations, y = Mean)) +
+      geom_line() +
+      geom_errorbar(aes(ymin = Mean - Sd, ymax = Mean + Sd),
+                    width = 0.2,
+                    position = position_dodge(0.9)) +
+      ylab(name) +
+      theme_bw() +
+      theme(text = element_text(size = 20))
+
+    if (method == "nb") {
+      if (feature_sel == TRUE) {
+        ggsave(paste0("2", main_method, "_",  name,
+                      "_FS", format))
+      } else{
+        ggsave(paste0("1", main_method, "_",  name,
+                      "_MedSel", format))
+
+      }
+    } else{
+      if (feature_sel == TRUE) {
+        ggsave(paste0("4", main_method, "_",  name,
+                      "_FS", format))
+      } else{
+        ggsave(paste0("3", main_method, "_",  name,
+                      "_MedSel", format))
+      }
+    }
+  }
+  return(list(plot=Sen_pl))
+}
+
+
+#------------------------------------------------------------------------------- CONFUSION MATRIX
+#' @title Confusion Matrix from Actual and Predicted Values
+#'
+#' @description
+#' This function is used to return confusion matrix from two vectors
+#' (i.e., actual and predicted class labels) and the related performance
+#' measures. Currently, it works for binary outcomes, i.e., a confusion
+#'  matrix for a 2-by-2 contingency table.
+#'
+#' @param actual a vector. It contains the actual class labels (or values)
+#'  of individuals.
+#' @param predicted a vector. It contains the predicted class labels of
+#' individuals.
+#' @param positive Which level should be considered as positive class?
+#' @param ... further arguments. Currently have no effect.
+#'
+#' @importFrom stats relevel
+#'
+#'
+confMat <- function(actual, predicted, positive = NULL, ...) {
+
+  if (length(levels(actual)) != 2 | length(levels(predicted)) != 2){
+    stop("Class labels must have exactly two levels. Actual and/or
+         predicted values have more than two levels.")
+  }
+
+  if (!identical(levels(actual), levels(predicted))){
+    stop("Class labels for 'actual' and 'predicted' vectors must be identical.")
+  }
+
+  actual <- as.factor(actual)
+  predicted <- as.factor(predicted)
+
+  if (is.null(positive)){
+    positive <- levels(positive)[1]
+  }
+
+  if (length(positive) > 1){
+    warning("Multiple elements provided for 'positive' class label.
+            First element is used.")
+    positive <- positive[1]
+  }
+
+  predicted <- relevel(predicted, positive)
+  actual <- relevel(actual, positive)
+
+  tbl <- table(predicted, actual)
+
+  res <- list(
+    sens = tbl[1, 1] / sum(tbl[ ,1]),
+    spec = tbl[2, 2] / sum(tbl[ ,2]),
+    ppv = tbl[1, 1] / sum(tbl[1, ]),
+    npv = tbl[2, 2] / sum(tbl[2, ]),
+    acc = sum(diag(tbl)) / sum(tbl),
+    f1 = 2 * tbl[1, 1] / (2 * tbl[1, 1] + tbl[1, 2] + tbl[2, 1])
+  )
+
+  return(res)
+}
+
+
+
+
