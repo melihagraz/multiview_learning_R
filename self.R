@@ -27,7 +27,9 @@
 #' fitted model.
 #'
 #' @examples
-#' 1L
+#' self(dataL, dataU, method = c("nb", "rf"), imbalanced = TRUE,
+#' neg_conf_prob = 0.9, pos_conf_prob = 0.1, feature_sel = TRUE,
+#' n_fold = 5, seed = 123,...)
 #'
 #' @export
 
