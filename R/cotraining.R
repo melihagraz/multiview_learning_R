@@ -25,17 +25,11 @@ res1<- self(dataL, dataU, method = "nb", imbalanced = TRUE,
                   neg_conf_prob = 0.9, pos_conf_prob = 0.1, feature_sel = TRUE,
                   n_fold = 5, seed = 123)
 
- 
+res1
 
-# graphs are automatically saved, so we can get the accuracy measures now.
-
-# NPV, PPV, Spec, Sens, Acc, F
-res1_fin<-matrix(c(res1[1:2,4],res1[1:2,3], res1[1:2,2], 
-                   res1[1:2, 1],res1[1:2, 5],res1[1:2, 6]), 2)
-
-res1_fin<-round(res1_fin,3)# Overleaf Table 2 (Naive Bayes);
-# 1st row. Medical Selected 1st iteration of Table 2
-# 2nd row. Medical Selected last iteration of Table 2
-res1_fin
+#                 Sensitivity   Specificity   PPV      NPV       Acc        F1      BalAcc
+# First iteration     0.40734     0.73992   0.18350  0.894320   0.69560   0.24842   0.57366
+# Last iteration      0.74038     0.26508   0.12856  0.868460   0.32572   0.21868   0.50272
+# Percentage         81.75971   -64.17451 -29.94005 -2.891582 -53.17424 -11.97166 -12.36621
 
 

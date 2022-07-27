@@ -44,15 +44,16 @@ library(randomForest)
 library(ggplot2)
 library(ggpubr)
 library(gridExtra)
+source("helper_functions.R")
 
 #----- Internal function ------#
-
+ 
 CoTrain_CV <-function(lab, unlabeled, method = c("nb", "rf"), train_prob = 0.8,
                       n_subPool=75, n_iteration=30, imbalanced=TRUE,
                       feature_sel=TRUE, n_neg=7, n_pos=1,
                       n_fold=5, seed = 123, ...){
 
-  source("helper_functions.R")
+  
 
   method <- match.arg(method)
 
@@ -105,8 +106,6 @@ CoTrain_CV <-function(lab, unlabeled, method = c("nb", "rf"), train_prob = 0.8,
   folds<-createFolds(View1_lab$out, k=n_fold)
   test_real<-numeric()
   test_fin1 <- numeric(); test_fin2 <-numeric()
-  i_cv<-1
-
   for (i_cv in 1:n_fold) {
     #------------------------------------------------------------------------------- pool
     indices        <- sample(1:nrow(unlabeled), n_subPool*2) # 150 for now I will split them for U1' and U2'
@@ -339,8 +338,8 @@ CoTrain_CV <-function(lab, unlabeled, method = c("nb", "rf"), train_prob = 0.8,
   } # for fold
 
   # Sens
-  SensCV_fin1 <-    data_summary(resConfv1$SensCV_v1)
-  SensCV_fin2 <-    data_summary(resConfv2$SensCV_v2)
+  SensCV_fin1 <-    data_summary(SensCV_v1)
+  SensCV_fin2 <-    data_summary(SensCV_v2)
   Nit<-dim(SensCV_fin1)[1]
 
   SensCV_fin<-data.frame( View = c(rep("View1", (iterations-1)),rep("View2", (iterations-1))),
@@ -350,8 +349,8 @@ CoTrain_CV <-function(lab, unlabeled, method = c("nb", "rf"), train_prob = 0.8,
   )
   plot_Co(  SensCV_fin, name = "Sensitivity" , method = method, format = ".pdf")
   # PLOT
-  SpecCV_fin1 <-    data_summary(resConfv1$SpecCV_v1)
-  SpecCV_fin2 <-    data_summary(resConfv2$SpecCV_v2)
+  SpecCV_fin1 <-    data_summary(SpecCV_v1)
+  SpecCV_fin2 <-    data_summary(SpecCV_v2)
   Nit<-dim( SensCV_fin1)[1]
 
   SpecCV_fin<-data.frame( View = c(rep("View1", (iterations-1)),rep("View2", (iterations-1))),
@@ -363,8 +362,8 @@ CoTrain_CV <-function(lab, unlabeled, method = c("nb", "rf"), train_prob = 0.8,
   plot_Co(SpecCV_fin, name = "Specificity" , method = method,  format = ".pdf")
 
   # ppv_plot
-  PPVCV_fin1 <-    data_summary( resConfv1$PPVCV_v1)
-  PPVCV_fin2 <-    data_summary( resConfv2$PPVCV_v2)
+  PPVCV_fin1 <-    data_summary( PPVCV_v1)
+  PPVCV_fin2 <-    data_summary( PPVCV_v2)
   Nit<-dim( SensCV_fin1)[1]
 
   PPVCV_fin<-data.frame( View = c(rep("View1", (iterations-1)),rep("View2", (iterations-1))),
@@ -374,8 +373,8 @@ CoTrain_CV <-function(lab, unlabeled, method = c("nb", "rf"), train_prob = 0.8,
   )
   plot_Co(  PPVCV_fin, name = "PPV" , method = method, format = ".pdf")
   # npv_plot
-  NPVCV_fin1 <-    data_summary( resConfv1$NPVCV_v1)
-  NPVCV_fin2 <-    data_summary( resConfv2$NPVCV_v2)
+  NPVCV_fin1 <-    data_summary( NPVCV_v1)
+  NPVCV_fin2 <-    data_summary( NPVCV_v2)
   Nit<-dim( SensCV_fin1)[1]
 
   NPVCV_fin<-data.frame( View = c(rep("View1", (iterations-1)),rep("View2", (iterations-1))),
@@ -385,8 +384,8 @@ CoTrain_CV <-function(lab, unlabeled, method = c("nb", "rf"), train_prob = 0.8,
   )
   plot_Co(  NPVCV_fin, name = "NPV" , method = method,format = ".pdf")
   # ACC
-  ACCCV_fin1 <-    data_summary( resConfv1$AccCV_v1)
-  ACCCV_fin2 <-    data_summary( resConfv2$AccCV_v2)
+  ACCCV_fin1 <-    data_summary( AccCV_v1)
+  ACCCV_fin2 <-    data_summary( AccCV_v2)
   Nit<-dim( SensCV_fin1)[1]
 
   AccCV_fin<-data.frame( View = c(rep("View1", (iterations-1)),rep("View2", (iterations-1))),
@@ -398,8 +397,8 @@ CoTrain_CV <-function(lab, unlabeled, method = c("nb", "rf"), train_prob = 0.8,
   plot_Co(  AccCV_fin, name = "Accuracy" , method = method, format = ".pdf")
 
   # F1
-  F1CV_fin1 <-    data_summary(resConfv1$F1CV_v1)
-  F1CV_fin2 <-    data_summary(resConfv2$F1CV_v2)
+  F1CV_fin1 <-    data_summary(F1CV_v1)
+  F1CV_fin2 <-    data_summary(F1CV_v2)
   Nit<-dim( SensCV_fin1)[1]
 
   F1CV_fin<-data.frame( View = c(rep("View1", (iterations-1)),rep("View2", (iterations-1))),
@@ -410,8 +409,8 @@ CoTrain_CV <-function(lab, unlabeled, method = c("nb", "rf"), train_prob = 0.8,
 
   plot_Co(  F1CV_fin, name = "F1" , method = method, format = ".pdf")
   # Bal Acc
-  BalAccCV_fin1 <-    data_summary(resConfv1$BalAccCV_v1)
-  BalAccCV_fin2 <-    data_summary(resConfv2$BalAccCV_v2)
+  BalAccCV_fin1 <-    data_summary(BalAccCV_v1)
+  BalAccCV_fin2 <-    data_summary(BalAccCV_v2)
   Nit<-dim( SensCV_fin1)[1]
 
   BalAccCV_fin<-data.frame( View = c(rep("View1", (iterations-1)),rep("View2", (iterations-1))),
@@ -423,8 +422,8 @@ CoTrain_CV <-function(lab, unlabeled, method = c("nb", "rf"), train_prob = 0.8,
   plot_Co(BalAccCV_fin, name = "BalancedAccuracy" , method = method,  format = ".pdf")
   #-----------------------------------------------------------------------------TP TN
   # TP
-  TP_fin1 <-    data_summary( resConfv1$TP_v1)
-  TP_fin2 <-    data_summary( resConfv2$TP_v2)
+  TP_fin1 <-    data_summary( TP_v1)
+  TP_fin2 <-    data_summary( TP_v2)
   Nit<-dim(SensCV_fin1)[1]
 
   TP_fin<-data.frame( View = c(rep("View1", (iterations-1)),rep("View2", (iterations-1))),
@@ -434,8 +433,8 @@ CoTrain_CV <-function(lab, unlabeled, method = c("nb", "rf"), train_prob = 0.8,
   )
   plot_Co(  TP_fin, name = "TP" , method = method,format = ".pdf")
   # TN
-  TN_fin1 <-    data_summary( resConfv1$TN_v1)
-  TN_fin2 <-    data_summary( resConfv2$TN_v2)
+  TN_fin1 <-    data_summary( TN_v1)
+  TN_fin2 <-    data_summary( TN_v2)
   Nit<-dim(SensCV_fin1)[1]
 
   TN_fin<-data.frame( View = c(rep("View1", (iterations-1)),rep("View2", (iterations-1))),
@@ -445,8 +444,8 @@ CoTrain_CV <-function(lab, unlabeled, method = c("nb", "rf"), train_prob = 0.8,
   )
   plot_Co(  TN_fin, name = "TN" , method = method, format = ".pdf")
   # FP
-  FP_fin1 <-    data_summary( resConfv1$FP_v1)
-  FP_fin2 <-    data_summary( resConfv2$FP_v2)
+  FP_fin1 <-    data_summary( FP_v1)
+  FP_fin2 <-    data_summary( FP_v2)
   Nit<-dim(SensCV_fin1)[1]
 
   FP_fin<-data.frame( View = c(rep("View1", (iterations-1)),rep("View2", (iterations-1))),
@@ -458,8 +457,8 @@ CoTrain_CV <-function(lab, unlabeled, method = c("nb", "rf"), train_prob = 0.8,
   plot_Co(  FP_fin, name = "FP" , method = method, format = ".pdf")
 
   #FN
-  FN_fin1 <-    data_summary( resConfv1$FN_v1)
-  FN_fin2 <-    data_summary( resConfv2$FN_v2)
+  FN_fin1 <-    data_summary( FN_v1)
+  FN_fin2 <-    data_summary( FN_v2)
   Nit<-dim(SensCV_fin1)[1]
 
   FN_fin<-data.frame( View = c(rep("View1", (iterations-1)),rep("View2", (iterations-1))),

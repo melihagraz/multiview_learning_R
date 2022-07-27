@@ -75,7 +75,7 @@ Conventional_ML <- function(dataL, method = c("logreg", "nb", "rf", "svm", "xgb"
     labF <- dataL[sel_feat_out]
     dataL <- labF
   } else {
-    labF <- dataL
+   dataL<-dataL
   }
   
   CV.Sensitivity <- CV.Specifity <- numeric()
@@ -86,7 +86,7 @@ Conventional_ML <- function(dataL, method = c("logreg", "nb", "rf", "svm", "xgb"
     set.seed(seed)
   }
   folds <- createFolds(dataL$out, k = n_fold)
-
+  method <- match.arg(method)
   for (i_cv in 1:n_fold) {
 
     testIndex <- folds[[i_cv]]
@@ -104,7 +104,7 @@ Conventional_ML <- function(dataL, method = c("logreg", "nb", "rf", "svm", "xgb"
 
     trainset<-balanced(trainset, seed = 123)
 
-    method <- match.arg(method)
+    
     if (method == "logreg") {
       #------------------------------------------------------------------------# Log.Reg.
       modelFit <- glm(out ~ ., data = trainset, family = "binomial")
