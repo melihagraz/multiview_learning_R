@@ -46,7 +46,7 @@ library(gridExtra)
 #----- Internal function ------#
 Conventional_ML <- function(dataL, method = c("logreg", "nb", "rf", "svm", "xgb"),
                             imbalanced = TRUE,
-                            feature_sel = c("Lasso", "Boruta", "MRMR"),
+                            feature_sel = c("Lasso", "Boruta", "MRMR", "Medical Selected"),
                             n_fold = 5, seed = NULL, ...){
 
   source("helper_functions.R")
@@ -61,7 +61,6 @@ Conventional_ML <- function(dataL, method = c("logreg", "nb", "rf", "svm", "xgb"
 
     labF <- dataL[sel_feat_out]
     dataL <- labF
-
   } else if (feature_sel == "Boruta") {
     sel_feat_out <- c("fpg_std", "hba1c_mean", "g1diabed_std",
                       "nphl_insulin_mean",
@@ -70,12 +69,15 @@ Conventional_ML <- function(dataL, method = c("logreg", "nb", "rf", "svm", "xgb"
                       "othbol_insulin_mean", "g1nutrit_mean", "out")
     labF <- dataL[sel_feat_out]
     dataL <- labF
-  } else {
+  } else if (feature_sel == "MRMR")  {
     sel_feat_out <- c("fpg_std", "hba1c_mean", "g1diabed_std",
                       "nphl_insulin_mean", "out")
     labF <- dataL[sel_feat_out]
     dataL <- labF
+  } else {
+    labF <- dataL
   }
+  
   CV.Sensitivity <- CV.Specifity <- numeric()
   CV.PPV <- CV.NPV <- numeric()
   CV.Accuracy <- CV.F.score <- numeric()
