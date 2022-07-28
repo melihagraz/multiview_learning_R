@@ -29,7 +29,11 @@
 #'
 #' @export
 
-balanced_Co <- function(data1, data2, seed = NULL, ...){
+balanced_Co <- function(data1, data2, imbalanced = imbalanced, seed = NULL, ...){
+  
+  if(!imbalanced){
+    train_view1<-train_view1 ;  train_view2<-train_view2
+  }else{
   imbal_dat1 <- data1
   imbal_dat2 <- data2
 
@@ -60,9 +64,14 @@ balanced_Co <- function(data1, data2, seed = NULL, ...){
 
   train_view1 <- fin_dat1
   train_view2 <- imbal_dat2[imb_fin, ]
-
+}
   return(list(view1 = train_view1, view2 = train_view2))
 }
+
+ 
+
+
+
 
 #------------------------------------------------------------------------------- BALANCED SELF
 #' @title Undersampling Algorithms for Imbalanced Classification for self training
@@ -245,7 +254,7 @@ feature_selection <- function(data, method = c("Lasso", "Boruta"),... ){
 
 plot_Co <-function(data, name = c( "Sensitivity", "Specificity", "PPV", "NPV",
                                    "Accuracy","BalancedAccuracy", "F1", "TP", "TN",
-                                   "FP", "FN"),
+                                   "FP", "FN"),feature_sel = feature_sel,
                    method = c("nb", "rf"), format = c(".pdf", ".csv")) {
 
   Iterations <- data$Iterations
@@ -535,5 +544,24 @@ confMat <- function(actual, predicted, positive = NULL, ...) {
 }
 
 
+#-------------------------------------------------------------------------------Selected features
 
+selected_features<-function(lab, feature_sel =TRUE){
+                            
+if(!feature_sel){
+  
+  View1_Medical_Sel_col<-c("fpg_mean", "fpg_std" ,"hba1c_mean","hba1c_std", "out" )
+  View2_Medical_Sel_col<-c("g1check_mean","g1check_std","g1diabed_mean","g1diabed_std",
+                           "g1nutrit_mean","g1nutrit_std", "out")
+  View1<-lab[ View1_Medical_Sel_col] 
+  View2<-lab[ View2_Medical_Sel_col]
+}else{
+  View1MRMR_col<-c("fpg_std" ,"hba1c_mean", "out" )
+  View2MRMR_col<-c("g1diabed_std"  , "nphl_insulin_mean", "out"  )
+  
+  View1<-lab[View1MRMR_col] 
+  View2<-lab[View2MRMR_col]
+}
+return(feat_res=list(View1, View1))
+}
 
