@@ -36,7 +36,6 @@
 #' @export
 #'
 #'
-
 #---------------------------------------------------------------------------- required R libraries
 library(dplyr)
 library(e1071)
@@ -46,9 +45,7 @@ library(ggplot2)
 library(ggpubr)
 library(gridExtra)
 source("helper_functions.R")
-
 #------------------------------------------------------- main function
-
 CoTrain_cv_errorBar <-
   function(lab, unlabeled, method = c("nb", "rf"), train_prob = 0.8,
            n_subPool = 75, n_iteration = 30, imbalanced = TRUE,
@@ -406,7 +403,6 @@ CoTrain_cv_errorBar <-
         Iterations = c(1:(iterations - 1), 1:(iterations - 1)),
         Mean = c(TN_fin1[, 2], TN_fin2[, 2]),
         Sd = c(TN_fin1[, 3], TN_fin2[, 3]) )
-    
     plot_Co( TN_fin, name = "Sensitivity" , feature_sel = feature_sel,
       method =  method, format = ".pdf" )
     # FP
