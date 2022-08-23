@@ -6,13 +6,13 @@ setwd(".../R")
 library(dplyr)
 library(xtable)
 source("helper_functions.R")
-#---------------------------------------------------------------------------------------------NB 
-
+#---------------------------------------------------------------------------------------------NB
+setwd("/Users/melihagraz/Documents/GitHub/multiview_learning_R/data")
 setwd(".../data")
-lab <- read.csv("lab_view1_2_3_labeled.csv")%>% 
+lab <- read.csv("lab_view1_2_3_labeled.csv")%>%
   dplyr::select(- c(X, MaskID))
 
-unlabeled<-unlab <- read.csv("unlab_view1_2_3_labeled.csv")%>% 
+unlabeled<-unlab <- read.csv("unlab_view1_2_3_labeled.csv")%>%
   dplyr::select(- c(X))
 
 n_NEG = 7 # number of negative classes we are selecting
@@ -21,9 +21,10 @@ n_POS = 1 # number of positive classes we are selecting
 #------------------------------------------------------------------------------------------- Naive Bayes
 # Naive Bayes Medical Selected
 setwd(".../R")
+setwd("/Users/melihagraz/Documents/GitHub/multiview_learning_R/R")
 source("main_multi-view_cotraining.R")
-Co_res2<-CoTrain_cv_errorBar(lab, unlab,  method = "nb",  train_prob  = 0.8,  
-                             n_subPool   = 75, n_iteration = 30, imbalanced  = TRUE, 
+Co_res2<-CoTrain_cv_errorBar(lab, unlab,  method = "nb",  train_prob  = 0.8,
+                             n_subPool   = 75, n_iteration = 30, imbalanced  = TRUE,
                              feature_sel = FALSE, n_neg = n_NEG, n_pos = n_POS,
                              n_fold = 5, seed=123 )
 
@@ -40,5 +41,5 @@ rownames(res1NB_MS2)<- c("first_v1", "last_v1", "perc_v1", "first_v2", "last_v2"
 colnames(res1NB_MS2)<-c("NPV", "PPV", "Spec", "Sen", "Acc", "F1" )
 res1NB_MS2
 
- 
+
 
