@@ -3,7 +3,7 @@ MRMR<-function(data, number_features = 3){
   data_raw<-data
   data_F<-data.frame(Variables = colnames(data_raw),
                      F_stat  = 0, cor=0.0001, MRMR=0)
-  data_F<-data_F[1:(dim(data_raw)[2]-1),] # -1 because instead of output
+  data_F<-data_F[1:(dim(data_raw)[2]-1),] # -1 because dropping the output
   data_F
   y<-data_raw[,(dim(data_raw)[2])]
   # Calculating the F-statistics
@@ -12,8 +12,8 @@ MRMR<-function(data, number_features = 3){
     data<-data.frame(x, y)
     fit<-lm(x ~ y, data = data)
     summary(fit)
-    RSS0 <- sum((x - mean(x))^2) #20181.97, this is same as TSS really
-    RSS <- sum(fit$residuals^2) #20181.64
+    RSS0 <- sum((x - mean(x))^2) # this is same as TSS 
+    RSS <- sum(fit$residuals^2) # 
     p <-  1 #predictors whos coefficient we are testing.
     n <- length(y) #number of observations
     res_F <- ((RSS0-RSS)/p ) / (RSS/(n-p-1))
