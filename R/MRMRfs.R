@@ -12,9 +12,9 @@ MRMR<-function(data, number_features = 3){
     data<-data.frame(x, y)
     fit<-lm(x ~ y, data = data)
     summary(fit)
-    RSS0 <- sum((x - mean(x))^2) # this is same as TSS 
-    RSS <- sum(fit$residuals^2) # 
-    p <-  1 #predictors whos coefficient we are testing.
+    RSS0 <- sum((x - mean(x))^2) 
+    RSS <- sum(fit$residuals^2) 
+    p <-  1 
     n <- length(y) #number of observations
     res_F <- ((RSS0-RSS)/p ) / (RSS/(n-p-1))
     options("scipen"=100, "digits"=4)
