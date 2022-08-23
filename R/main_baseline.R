@@ -14,7 +14,7 @@ dataL<-read.csv("lab_view1_2_3_labeled.csv") %>%
 
 
 
-LR <- Conventional_ML(dataL = dataL, method = "logreg", imbalanced = TRUE,
+LR <- ConventionalMacLearn(dataL = dataL, method = "logreg", imbalanced = TRUE,
                  feature_sel = "Lasso", n_fold = 5,seed = 123)
 LR 
 

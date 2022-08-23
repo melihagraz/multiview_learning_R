@@ -46,7 +46,7 @@ source("helper_functions.R")
 
 #----- Internal function ------#
 
-self  <- function(dataL, dataU, method = c("nb", "rf"), imbalanced = TRUE,
+CoTraining <- function(dataL, dataU, method = c("nb", "rf"), imbalanced = TRUE,
                   neg_conf_prob = 0.9, pos_conf_prob = 0.1, feature_sel = TRUE,
                   n_fold = 5, seed = 123,...) {
 

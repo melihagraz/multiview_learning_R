@@ -6,6 +6,7 @@ setwd(".../R")
 library(dplyr)
 library(xtable)
 source("helper_functions.R")
+source("multi_view_cotraining.R")
 #---------------------------------------------------------------------------------------------NB
 setwd("/Users/melihagraz/Documents/GitHub/multiview_learning_R/data")
 setwd(".../data")
@@ -20,15 +21,13 @@ n_POS = 1 # number of positive classes we are selecting
 
 #------------------------------------------------------------------------------------------- Naive Bayes
 # Naive Bayes Medical Selected
-setwd(".../R")
-setwd("/Users/melihagraz/Documents/GitHub/multiview_learning_R/R")
-source("main_multi-view_cotraining.R")
-Co_res2<-CoTrain_cv_errorBar(lab, unlab,  method = "nb",  train_prob  = 0.8,
+
+Co_res2<-MultiViewCoTraininig(lab, unlab,  method = "nb",  train_prob  = 0.8,
                              n_subPool   = 75, n_iteration = 30, imbalanced  = TRUE,
                              feature_sel = FALSE, n_neg = n_NEG, n_pos = n_POS,
                              n_fold = 5, seed=123 )
 
-Co_res2
+
 res1NB_MS2<- matrix( c(Co_res2$first_last[1:3,7],Co_res2$first_last[1:3,8],
                        Co_res2$first_last[1:3,5], Co_res2$first_last[1:3,6],
                        Co_res2$first_last[1:3,3], Co_res2$first_last[1:3,4],

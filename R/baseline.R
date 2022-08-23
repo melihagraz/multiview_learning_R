@@ -44,7 +44,7 @@ library(praznik)
 library(gridExtra)
 
 #----- Internal function ------#
-Conventional_ML <- function(dataL, method = c("logreg", "nb", "rf", "svm", "xgb"),
+ConventionalMacLearn <- function(dataL, method = c("logreg", "nb", "rf", "svm", "xgb"),
                             imbalanced = TRUE,
                             feature_sel = c("Lasso", "Boruta", "MRMR", "Medical Selected"),
                             n_fold = 5, seed = NULL, ...){

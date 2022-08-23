@@ -21,7 +21,7 @@ dataU<-read.csv("unlab_view1_2_3_labeled.csv") %>%
 # feature selection method is FALSE
 # this means we are using all the features
 
-res1<- self(dataL, dataU, method = "nb", imbalanced = TRUE,
+res1<- CoTraining(dataL, dataU, method = "nb", imbalanced = TRUE,
                   neg_conf_prob = 0.9, pos_conf_prob = 0.1, feature_sel = TRUE,
                   n_fold = 5, seed = 123)
 

@@ -46,7 +46,7 @@ library(ggpubr)
 library(gridExtra)
 source("helper_functions.R")
 #------------------------------------------------------- main function
-CoTrain_cv_errorBar <-
+MultiViewCoTraininig<-
   function(lab, unlabeled, method = c("nb", "rf"), train_prob = 0.8,
            n_subPool = 75, n_iteration = 30, imbalanced = TRUE,
            feature_sel = TRUE, n_neg = 7, n_pos = 1, n_fold = 5,
