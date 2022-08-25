@@ -152,9 +152,9 @@ ConventionalMacLearn <- function(dataL, method = c("logreg", "nb", "rf", "svm", 
       )
       predicted <- predict(modelFit, testset, type = "class")
     }
-    actual <- testset$out
-    actual<-as.factor(actual)
-    predicted<-as.factor(predicted)
+ 
+    actual   <- as.factor(testset$out)
+    predicted<- as.factor(predicted)
 
     perfMeas <- confMat(actual, predicted, positive = "1")
 

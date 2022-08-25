@@ -134,6 +134,9 @@ MultiViewCoTraininig<-
         train_view2 <- imbal_dat2[imb_fin, ]
       }
       iterations <-  1
+      conf_mat_null_v1<-matrix(NA, 2,3)
+      conf_mat_null_v2<-matrix(NA, 2,3)
+      
       while (iterations <= n_iteration) {
         method <- match.arg(method, choices = c("nb", "rf"))
         if (!method %in% c("nb", "rf"))
@@ -161,6 +164,15 @@ MultiViewCoTraininig<-
           TP_v1[i_cv, iterations] <- round(conf_res$table[4], 4)
           FN_v1[i_cv, iterations] <- round(conf_res$table[3], 4)
           FP_v1[i_cv, iterations] <- round(conf_res$table[2], 4)
+          
+          conf_matr           <- matrix( c(c(round(conf_res$table[1], 4),round(conf_res$table[3], 4)),
+                                                c(round(conf_res$table[2], 4),   round(conf_res$table[4], 4))),2)
+          conf_matr
+          colnames( conf_matr)<- c("0","1")
+          rownames( conf_matr)<- c("0","1")
+          
+          conf_matr<-cbind(iteration=rep(iterations,2), conf_matr) 
+          conf_mat_null_v1<-rbind( conf_mat_null_v1 , conf_matr) 
         } else {
           naiv_bay_v1 <- randomForest( as.factor(out) ~ ., data = train_view1,
             method = 'class', ntree = 500 )
@@ -181,6 +193,15 @@ MultiViewCoTraininig<-
           TP_v1[i_cv, iterations] <- round(conf_res$table[4], 4)
           FN_v1[i_cv, iterations] <- round(conf_res$table[3], 4)
           FP_v1[i_cv, iterations] <- round(conf_res$table[2], 4)
+          
+          conf_matr           <- matrix( c(c(round(conf_res$table[1], 4),round(conf_res$table[3], 4)),
+                                           c(round(conf_res$table[2], 4),   round(conf_res$table[4], 4))),2)
+          conf_matr
+          colnames( conf_matr)<- c("0","1")
+          rownames( conf_matr)<- c("0","1")
+          
+          conf_matr<-cbind(iteration=rep(iterations,2), conf_matr) 
+          conf_mat_null_v1<-rbind( conf_mat_null_v1 , conf_matr) 
         }
         # View 2
         if (method == "nb") {
@@ -203,6 +224,15 @@ MultiViewCoTraininig<-
           TP_v2[i_cv, iterations] <- round(conf_res$table[4], 4)
           FN_v2[i_cv, iterations] <- round(conf_res$table[3], 4)
           FP_v2[i_cv, iterations] <- round(conf_res$table[2], 4)
+          
+          conf_matr           <- matrix( c(c(round(conf_res$table[1], 4),round(conf_res$table[3], 4)),
+                                           c(round(conf_res$table[2], 4),   round(conf_res$table[4], 4))),2)
+          conf_matr
+          colnames( conf_matr)<- c("0","1")
+          rownames( conf_matr)<- c("0","1")
+          
+          conf_matr        <- cbind(iteration=rep(iterations,2), conf_matr) 
+          conf_mat_null_v2 <- rbind( conf_mat_null_v2 , conf_matr) 
         } else {
           naiv_bay_v2 <- randomForest( as.factor(out) ~ ., data = train_view2,
             method = 'class', ntree = 500  )
@@ -222,6 +252,16 @@ MultiViewCoTraininig<-
           TP_v2[i_cv, iterations] <- round(conf_res$table[4], 4)
           FN_v2[i_cv, iterations] <- round(conf_res$table[3], 4)
           FP_v2[i_cv, iterations] <- round(conf_res$table[2], 4)
+          
+          conf_matr           <- matrix( c(c(round(conf_res$table[1], 4),round(conf_res$table[3], 4)),
+                                           c(round(conf_res$table[2], 4),   round(conf_res$table[4], 4))),2)
+          conf_matr
+          colnames( conf_matr)<- c("0","1")
+          rownames( conf_matr)<- c("0","1")
+          
+          conf_matr        <- cbind(iteration=rep(iterations,2), conf_matr) 
+          conf_mat_null_v2 <- rbind(conf_mat_null_v2 , conf_matr) 
+          
         }
         #----------------------------------------------------------------------------- UPDATE
         #v1
@@ -238,12 +278,20 @@ MultiViewCoTraininig<-
         unlab_pred_u2 <- unlab_pred_u2[order(-unlab_pred_u2$pr), ]
         #--------------------------------------------------------------------------- update labels
         n_u1_pred <- dim(unlab_pred_u1)[1]
-        which(unlab_pred_u2$out == 1)
+         
+        # sometimes we wouldnot have 0 or 1 outputs, we are checking that
+        sum_neg_out<- sum(unlab_pred_u1[c(1:n_neg),"out"])
+        sum_pos_out<- sum(unlab_pred_u1[seq(n_u1_pred, 1, -1)[1:n_pos],"out"])
+        
+        if(sum_neg_out != 0){ n_neg=(n_neg-sum_neg_out)}
+        if(sum_pos_out != n_pos){ n_pos=sum_pos_out}
+        
         sel_u1 <-
           unlab_pred_u1[c(1:n_neg, seq(n_u1_pred, 1, -1)[1:n_pos]),]
-        if (sel_u1$out[(n_neg + n_pos)] != 1) {
-          sel_u1 <-  sel_u1[-(n_neg + n_pos),]
-        }
+        # if (sel_u1$out[(n_neg + n_pos)] != 1) {
+        #   sel_u1 <-  sel_u1[-(n_neg + n_pos),]
+        # }
+        
         unlab_subpool1_drop  <- unlab_subpool1[-which(unlab_subpool1$MaskID %in%
                                   c(sel_u1$MaskID)),]
         set.seed(seed)
@@ -535,6 +583,10 @@ MultiViewCoTraininig<-
       c("Sen", "Spec",   "PPV", "NPV", "Acc", "F1", "BalAcc")
     Conc_OR2 <- Conc_OR[, c("NPV", "PPV", "Spec", "Sen", "Acc", "F1")]
     
+    conf_mat_null_v1<- conf_mat_null_v1[-c(1,2),] 
+    conf_mat_null_v2<- conf_mat_null_v2[-c(1,2),]   
+    
+    
     return( list( first_last = first_last, test_fin1 = test_fin1, Conc_AND = Conc_AND2,
-        Conc_OR = Conc_OR2 ) )
+        Conc_OR = Conc_OR2, confusion_matrix_v1=conf_mat_null_v1,confusion_matrix_v2=conf_mat_null_v2  ) )
   }# function

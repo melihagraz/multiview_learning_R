@@ -25,7 +25,8 @@ res1<- CoTraining(dataL, dataU, method = "nb", imbalanced = TRUE,
                   neg_conf_prob = 0.9, pos_conf_prob = 0.1, feature_sel = TRUE,
                   n_fold = 5, seed = 123)
 
-res1
+res1$accuracy_measures
+res1$confusion_matrix
 
 #                 Sensitivity   Specificity   PPV      NPV       Acc        F1      BalAcc
 # First iteration     0.40734     0.73992   0.18350  0.894320   0.69560   0.24842   0.57366

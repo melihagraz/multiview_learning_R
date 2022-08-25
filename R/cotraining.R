@@ -107,6 +107,7 @@ CoTraining <- function(dataL, dataU, method = c("nb", "rf"), imbalanced = TRUE,
     length_negpos_selection <- 1 # : is the length of selected positive and negative
     # pseudo labels.  to start to the while loop, we assign it as 1.
     # while loop will continue till no observation is selected.
+    conf_mat_null<-matrix(NA, 2,3)
     while (length(length_negpos_selection) > 0) {
       if (method == "nb") {
         naiv_bay <- naiveBayes(as.factor(out) ~ ., data = train,
@@ -125,6 +126,9 @@ CoTraining <- function(dataL, dataU, method = c("nb", "rf"), imbalanced = TRUE,
                                           as.factor(test$out),
                                           positive = "1")
 
+      conf_matr<-confusion_result$table
+      conf_matr<-cbind(iteration=rep(iterations,2), conf_matr) 
+      conf_mat_null<-rbind( conf_mat_null , conf_matr)    
       # ACCURACY MEASURES
       Sensitivity_CV[i_cv, iterations] <- round(confusion_result$byClass[[1]], 4)
       Specificity_CV[i_cv, iterations] <- round(confusion_result$byClass[[2]], 4)
@@ -331,6 +335,6 @@ CoTraining <- function(dataL, dataU, method = c("nb", "rf"), imbalanced = TRUE,
   saver( first_last,  name="FirstLast",   format =  ".csv",
          main_method="self",
          method = method, feature_sel = feature_sel)
-  
-  return(first_last = first_last)
+  conf_mat_null<- conf_mat_null[-c(1,2),]
+  return(first_last = list(accuracy_measures=first_last, confusion_matrix=conf_mat_null))
 }

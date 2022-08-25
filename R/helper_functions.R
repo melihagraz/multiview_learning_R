@@ -153,7 +153,10 @@ data_summary<-function(data){
 
 
 #-------------------------------------------------------------------------------  FEATURE SELECTION
+#paper:
+# https://arxiv.org/abs/1908.05376
 
+# towardsdata:
 #https://towardsdatascience.com/mrmr-explained-exactly-how-you-wished-someone-explained-to-you-9cf4ed27458b
 #' @title Feature Selection Algorithms: Lasso & Boruta
 #'
