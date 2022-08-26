@@ -305,7 +305,18 @@ MultiViewCoTraininig<-
         #------------------------------------------------------------------------------
         # update lab
         n_u2_pred <- dim(unlab_pred_u2)[1]
-        sel_u2 <- unlab_pred_u2[c(1:n_neg,   seq(n_u2_pred, 1, -1)[1:n_pos]),]
+        
+        # sometimes we wouldnot have 0 or 1 outputs in the prediction of unlabeled
+        # data, we are checking that
+        sum_neg_out2<- sum(unlab_pred_u2[c(1:n_neg),"out"])
+        sum_pos_out2<- sum(unlab_pred_u2[seq(n_u2_pred, 1, -1)[1:n_pos],"out"])
+        
+        if(sum_neg_out2 != 0){ n_neg=(n_neg-sum_neg_out2)}
+        if(sum_pos_out2 != n_pos){ n_pos=sum_pos_out2}
+        
+        
+        sel_u2 <- 
+          unlab_pred_u2[c(1:n_neg,   seq(n_u2_pred, 1, -1)[1:n_pos]),]
         sel_u2
         if (sel_u2$out[(n_neg + n_pos)] != 1) {
           sel_u2 <-  sel_u2[-(n_neg + n_pos),]
@@ -590,6 +601,5 @@ MultiViewCoTraininig<-
     
     
     return( list( first_last = first_last, test_fin1 = test_fin1, Conc_AND = Conc_AND2,
-        Conc_OR = Conc_OR2, confusion_matrix_v1=conf_mat_null_v1,confusion_matrix_v2=conf_mat_null_v2 ))
-    
+        Conc_OR = Conc_OR2, confusion_matrix_v1=conf_mat_null_v1,confusion_matrix_v2=conf_mat_null_v2  ))
   }# function
