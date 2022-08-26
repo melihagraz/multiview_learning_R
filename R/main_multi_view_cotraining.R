@@ -26,7 +26,8 @@ Co_res2<-MultiViewCoTraininig(lab, unlab,  method = "nb",  train_prob  = 0.8,
                              n_subPool   = 75, n_iteration = 30, imbalanced  = TRUE,
                              feature_sel = FALSE, n_neg = n_NEG, n_pos = n_POS,
                              n_fold = 5, seed=123 )
-
+Co_res2$confusion_matrix_v1
+Co_res2$confusion_matrix_v2
 
 res1NB_MS2<- matrix( c(Co_res2$first_last[1:3,7],Co_res2$first_last[1:3,8],
                        Co_res2$first_last[1:3,5], Co_res2$first_last[1:3,6],

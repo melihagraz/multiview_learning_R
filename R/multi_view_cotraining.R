@@ -279,7 +279,8 @@ MultiViewCoTraininig<-
         #--------------------------------------------------------------------------- update labels
         n_u1_pred <- dim(unlab_pred_u1)[1]
          
-        # sometimes we wouldnot have 0 or 1 outputs, we are checking that
+        # sometimes we wouldnot have 0 or 1 outputs in the prediction of unlabeled
+        # data, we are checking that
         sum_neg_out<- sum(unlab_pred_u1[c(1:n_neg),"out"])
         sum_pos_out<- sum(unlab_pred_u1[seq(n_u1_pred, 1, -1)[1:n_pos],"out"])
         
@@ -496,6 +497,7 @@ MultiViewCoTraininig<-
       main_method = "COV1", method = method, feature_sel = feature_sel )
     first_last <-
       data.frame(
+        
         Sen_v1 = c(SensCV_fin1[1, 2], SensCV_fin1[dim(SensCV_fin1)[1], 2],
                    100 * ((SensCV_fin1[dim(SensCV_fin1)[1], 2] - SensCV_fin1[1, 2]) /
                             (SensCV_fin1[1, 2])
@@ -550,7 +552,7 @@ MultiViewCoTraininig<-
                         )),
         BalAcc_v2 =   c(BalAccCV_fin2[1, 2], BalAccCV_fin2[dim(BalAccCV_fin2)[1], 2],
                         100 * ((BalAccCV_fin2[dim(BalAccCV_fin2)[1], 2] - BalAccCV_fin2[1, 2]) /
-                                 (BalAccCV_fin2[1, 2]) )) )
+                                 (BalAccCV_fin2[1, 2]) )))
     rownames(first_last) <- c("first_iteration", "second iteration", "percentage")
     #concatanete: MULTI-VIEW
     test_fin12 <- test_fin1 + test_fin2
@@ -588,5 +590,6 @@ MultiViewCoTraininig<-
     
     
     return( list( first_last = first_last, test_fin1 = test_fin1, Conc_AND = Conc_AND2,
-        Conc_OR = Conc_OR2, confusion_matrix_v1=conf_mat_null_v1,confusion_matrix_v2=conf_mat_null_v2  ) )
+        Conc_OR = Conc_OR2, confusion_matrix_v1=conf_mat_null_v1,confusion_matrix_v2=conf_mat_null_v2 ))
+    
   }# function

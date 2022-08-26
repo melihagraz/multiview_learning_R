@@ -4,9 +4,9 @@ cat("\014")
 #---------------------------------------------------------------# packages
 library(dplyr)
 library(xtable)
-source("main_cotraining.R")
+source("cotraining.R")
 #---------------------------------------------------------------# environment
-setwd("...\data")
+setwd("/Users/melihagraz/Documents/GitHub/multiview_learning_R/data")
 
 #---------------------------------------------------------------# read the data
 #labeled data
@@ -23,7 +23,8 @@ dataU<-read.csv("unlab_view1_2_3_labeled.csv") %>%
 
 res1<- CoTraining(dataL, dataU, method = "nb", imbalanced = TRUE,
                   neg_conf_prob = 0.9, pos_conf_prob = 0.1, feature_sel = TRUE,
-                  n_fold = 5, seed = 123)
+                  n_fold = 5, seed = 123
+                  )
 
 res1$accuracy_measures
 res1$confusion_matrix

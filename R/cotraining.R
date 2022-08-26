@@ -331,10 +331,13 @@ CoTraining <- function(dataL, dataU, method = c("nb", "rf"), imbalanced = TRUE,
                BalAccCV_fin[dim(BalAccCV_fin)[1], 2],
                100 * ((BalAccCV_fin[dim(BalAccCV_fin)[1], 2] -
                          BalAccCV_fin[1, 2]) / (BalAccCV_fin[1, 2]))))
-  rownames(first_last) <- c("First iteration", "Last iteration", "Percentage")
+  rownames(first_last) <- c("First iteration", "Last iteration", "Percentage Gain")
   saver( first_last,  name="FirstLast",   format =  ".csv",
          main_method="self",
          method = method, feature_sel = feature_sel)
   conf_mat_null<- conf_mat_null[-c(1,2),]
   return(first_last = list(accuracy_measures=first_last, confusion_matrix=conf_mat_null))
 }
+
+
+
