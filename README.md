@@ -9,11 +9,12 @@ This project provides a structure of folders and files for Multi-view Learning A
 
 ```main_baseline.R```, ```main_cotraining.R``` and ```main_multi-view.R``` are the main part of the conventional, self training and multi-view cotraining machine learning analysis, respectively.
 
+## Feature selection
+TODO
 
 ## Baseline 
 
 You can run conventional machine learning algorithms (logistic regression, naive bayes, random forest, support vector machine, xgboost) with ```main_baseline.R``` code. ```baseline.R``` is a code that shows how to run the main ```main_baseline.R``` code.
-
 
 
 ## Cotraining 
