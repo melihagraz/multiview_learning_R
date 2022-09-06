@@ -10,7 +10,10 @@ This project provides a structure of folders and files for Multi-view Learning A
 ```main_baseline.R```, ```main_cotraining.R``` and ```main_multi-view.R``` are the main part of the conventional, self training and multi-view cotraining machine learning analysis, respectively.
 
 ## Feature selection
-TODO
+
+FeatureSelection(data, method = "Lasso" )
+FeatureSelection(data, method = "Boruta" )
+FeatureSelection(data, method = "MRMR", K = 4)
 
 ## Baseline 
 
