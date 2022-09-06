@@ -95,8 +95,8 @@ ConventionalMacLearn <- function(dataL, method = c("logreg", "nb", "rf", "svm", 
       stop("There must be at least two observations in the test folds.
            At least one 'cv' fold is empty or has one observation.")
     }
-    trainset <- dataL[-testIndex,]
-    testset  <- dataL[ testIndex,]
+    trainset <- dataL[-testIndex, ]
+    testset  <- dataL[ testIndex, ]
 
     if (!is.null(seed)){
       set.seed(seed)
@@ -128,7 +128,7 @@ ConventionalMacLearn <- function(dataL, method = c("logreg", "nb", "rf", "svm", 
       modelFit <- xgboost(data = xgb_train,
                           label = xgb_trainlabel,
                           nrounds = 2)
-      predicted <- predict(xg_boost,
+      predicted <- predict(modelFit,
                            newdata =  as.matrix(testset[-x6]),
                            type = "response")
       predicted <- ifelse(predicted > 0.5, 1, 0)
@@ -166,7 +166,7 @@ ConventionalMacLearn <- function(dataL, method = c("logreg", "nb", "rf", "svm", 
     CV.F.score[i_cv] = perfMeas[["f1"]]
   }# end fold
   res <- matrix(c(
-    mean(CV.NPV,na.rm=TRUE ),
+    mean(CV.NPV, na.rm=TRUE ),
     mean(CV.PPV),
     mean(CV.Specifity),
     mean(CV.Sensitivity),

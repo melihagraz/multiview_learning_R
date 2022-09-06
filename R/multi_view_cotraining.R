@@ -318,9 +318,10 @@ MultiViewCoTraininig<-
         sel_u2 <- 
           unlab_pred_u2[c(1:n_neg,   seq(n_u2_pred, 1, -1)[1:n_pos]),]
         sel_u2
-        if (sel_u2$out[(n_neg + n_pos)] != 1) {
-          sel_u2 <-  sel_u2[-(n_neg + n_pos),]
-        }
+        # if (sel_u2$out[(n_neg + n_pos)] != 1) {
+        #   sel_u2 <-  sel_u2[-(n_neg + n_pos),]
+        # }
+        
         # update View2
         unlab_subpool2_drop  <- unlab_subpool2[-which(unlab_subpool2$MaskID %in%
                                   c(sel_u2$MaskID)),]
