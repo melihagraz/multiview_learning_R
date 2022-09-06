@@ -17,6 +17,9 @@ FeatureSelection(data, method = "Lasso" )
 [5] "g1check_mean"        "g1diabed_mean"       "g1diabed_std"        "g1nutrit_std"       
 [9] "sulfonylurea_mean"   "nphl_insulin_mean"   "othbol_insulin_mean" "premix_insulin_mean"
 
+![Rplot](https://user-images.githubusercontent.com/37498443/188721984-6aaffe1f-85c3-494c-86d6-72fd26c020bc.png)
+
+
 FeatureSelection(data, method = "Boruta" )
 
 FeatureSelection(data, method = "MRMR", K = 4)
