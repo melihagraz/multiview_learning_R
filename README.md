@@ -13,6 +13,10 @@ This project provides a structure of folders and files for Multi-view Learning A
 
 FeatureSelection(data, method = "Lasso" )
 
+# [1] "fpg_mean"            "fpg_std"             "hba1c_mean"          "MaskID"             
+# [5] "g1check_mean"        "g1diabed_mean"       "g1diabed_std"        "g1nutrit_std"       
+# [9] "sulfonylurea_mean"   "nphl_insulin_mean"   "othbol_insulin_mean" "premix_insulin_mean"
+
 FeatureSelection(data, method = "Boruta" )
 
 FeatureSelection(data, method = "MRMR", K = 4)
