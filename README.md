@@ -13,9 +13,9 @@ This project provides a structure of folders and files for Multi-view Learning A
 
 FeatureSelection(data, method = "Lasso" )
 
-[1] "fpg_mean"            "fpg_std"             "hba1c_mean"          "MaskID"             
-[5] "g1check_mean"        "g1diabed_mean"       "g1diabed_std"        "g1nutrit_std"       
-[9] "sulfonylurea_mean"   "nphl_insulin_mean"   "othbol_insulin_mean" "premix_insulin_mean"
+[1] "fpg_mean"            "fpg_std"             "hba1c_mean"                   
+[4] "g1check_mean"        "g1diabed_mean"       "g1diabed_std"        "g1nutrit_std"       
+[8] "sulfonylurea_mean"   "nphl_insulin_mean"   "othbol_insulin_mean" "premix_insulin_mean"
 
 ![Rplot](https://user-images.githubusercontent.com/37498443/188721984-6aaffe1f-85c3-494c-86d6-72fd26c020bc.png)
 
