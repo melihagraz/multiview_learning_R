@@ -12,7 +12,9 @@ This project provides a structure of folders and files for Multi-view Learning A
 ## Feature selection
 
 FeatureSelection(data, method = "Lasso" )
+
 FeatureSelection(data, method = "Boruta" )
+
 FeatureSelection(data, method = "MRMR", K = 4)
 
 ## Baseline 
