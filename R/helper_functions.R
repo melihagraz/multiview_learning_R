@@ -153,11 +153,11 @@ data_summary<-function(data){
 
 
 #-------------------------------------------------------------------------------  FEATURE SELECTION
-#paper:
+# paper: MRMR
 # https://arxiv.org/abs/1908.05376
 
 # towardsdata:
-#https://towardsdatascience.com/mrmr-explained-exactly-how-you-wished-someone-explained-to-you-9cf4ed27458b
+# https://towardsdatascience.com/mrmr-explained-exactly-how-you-wished-someone-explained-to-you-9cf4ed27458b
 #' @title Feature Selection Algorithms: Lasso & Boruta
 #'
 #' @description
@@ -224,7 +224,7 @@ feature_selection <- function(data, method = c("Lasso", "Boruta", "MRMR"), K = N
 
 
 
-  } else{
+  } else{ # MRMR
     K<-number_features
     data_raw<-data
     #data_F: calculating F score
@@ -251,8 +251,7 @@ feature_selection <- function(data, method = c("Lasso", "Boruta", "MRMR"), K = N
     cor_X<- cor(X)
     selected<-c()
     not_selected<-names(X)
-    length(not_selected)
-    
+
     # the real MRMR part 
     for (i in 1:K) {
       if(i==1){
