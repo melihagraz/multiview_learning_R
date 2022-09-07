@@ -52,11 +52,11 @@ You can run the main code with ```cotraining.R``` code.
 You can run the main multi-view code with ```multi-view_cotraining.R```. 
 
 
-## ```helper_functions.R```
+## ```HelperFunctions.R```
 
-```helper_functions.R``` is a code that contains auxiliary functions to the main functions.
+```HelperFunctions.R``` is a code that contains auxiliary functions to the main functions.
 
-The functions in the ```helper_functions.R```  are;
+The functions in the ```HelperFunctions.R```  are;
 
 ```balanced_Co``` is created to fix imbalanced problem in multi-view cotraining algorithm.
 
