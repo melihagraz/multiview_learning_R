@@ -7,7 +7,7 @@ This project provides a structure of folders and files for Multi-view Learning A
 
 ```MultiViewCotraining.R``` ; multi-view co-training machine learning parts.
 
-```main_baseline.R```, ```main_cotraining.R``` and ```main_multi-view.R``` are the main part of the conventional, self training and multi-view cotraining machine learning analysis, respectively.
+```MainBaseline.R```, ```MainCotraining.R``` and ```MainMultiView.R``` are the main part of the conventional, self training and multi-view cotraining machine learning analysis, respectively.
 
 ## Feature selection
 
