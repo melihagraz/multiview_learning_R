@@ -5,7 +5,7 @@ This project provides a structure of folders and files for Multi-view Learning A
 
 ```cotraining.R```; self-training machine learning part and
 
-```multi-view_cotraining.R``` ; multi-view co-training machine learning parts.
+```MultiViewCotraining.R``` ; multi-view co-training machine learning parts.
 
 ```main_baseline.R```, ```main_cotraining.R``` and ```main_multi-view.R``` are the main part of the conventional, self training and multi-view cotraining machine learning analysis, respectively.
 
@@ -49,7 +49,7 @@ You can run the main code with ```cotraining.R``` code.
 
 ```multi-view_cotraining.R``` is the main code of the multi-view co training algorithm. This code is written according to Blum and Mitchell (1998) paper. This code gives you an opportunity to run multi-view learning algorithm only for Naive Bayes and Random Forest Model. You must type method="Naive Bayes" or method="Random Forest" to run machine learning models. You can split the data as train/test with typing train_prob = 0.8. Number of pool from the unlabeled data can be assigned typing asn_subPool=75 and number of iteration is fixed as 30 as typing n_iteration=30. If your data is imbalanced, you must type imbalanced=TRUE to fix it, otherwise imbalanced=FALSE. If you want to continuous with MRMR selected features, you must type feature_sel=TRUE. You can choose the number of folds by n_fold, default is 5. You can specify how many negative and positive confidence pseudo features can be selected by typing n_neg and n_pos, respectively.
 
-You can run the main multi-view code with ```multi-view_cotraining.R```. 
+You can run the main multi-view code with ```MultiViewCotraining.R```. 
 
 
 ## ```HelperFunctions.R```
