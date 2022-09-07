@@ -10,7 +10,8 @@ This project provides a structure of folders and files for Multi-view Learning A
 ```MainBaseline.R```, ```MainCotraining.R``` and ```MainMultiView.R``` are the main part of the conventional, self training and multi-view cotraining machine learning analysis, respectively.
 
 ## Feature selection
-We are applying 3 different feature selection algorithm namely LASSO, Boruta and MRMR. MRMR was first introduced by Peng et al. in 2005, this proposed method maximizes the relevance of selected features while minimizing their redundancy. Afterwards various variants of MRMR were developed. UBER research scientist Zhao et al. introduced several MRMR methods such as MID, MIQ, FCD, FCQ, FRQ, RFCQ, and RFRQ. Since FCQ is faster and more effective than other methods, we focus on this method in this article.
+We are applying 3 different feature selection algorithm namely LASSO, Boruta and MRMR. MRMR was first introduced by Peng et al. in 2005, this proposed method maximizes the relevance of selected features while minimizing their redundancy. Afterwards various variants of MRMR were developed. UBER research scientist Zhao et al. introduced several MRMR methods such as MID, MIQ, FCD, FCQ, FRQ, RFCQ, and RFRQ. Since FCQ is faster and more effective than other methods, we focus on this method in this article. First let us see, how the LASSO method works;
+
 FeatureSelection(data, method = "Lasso" )
 
 [1] "fpg_mean"            "fpg_std"             "hba1c_mean"                   
