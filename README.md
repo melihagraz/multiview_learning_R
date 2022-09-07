@@ -24,11 +24,11 @@ You can see the selected features from the ACCORD data below;
 
 Then let us see, how the Boruta method works;
 
-FeatureSelection(data, method = "Boruta" )
+```FeatureSelection(data, method = "Boruta" )```
 
 Then let us see, how the MRMR method works;
 
-FeatureSelection(data, method = "MRMR", K = 4)
+```FeatureSelection(data, method = "MRMR", K = 4)```
 
 ## Baseline 
 
