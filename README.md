@@ -14,14 +14,19 @@ We are applying 3 different feature selection algorithm namely LASSO, Boruta and
 
 FeatureSelection(data, method = "Lasso" )
 
+You can see the selected features from the ACCORD data below;
+
 [1] "fpg_mean"            "fpg_std"             "hba1c_mean"                   
 [4] "g1check_mean"        "g1diabed_mean"       "g1diabed_std"        "g1nutrit_std"       
 [8] "sulfonylurea_mean"   "nphl_insulin_mean"   "othbol_insulin_mean" "premix_insulin_mean"
 
 ![Rplot](https://user-images.githubusercontent.com/37498443/188721984-6aaffe1f-85c3-494c-86d6-72fd26c020bc.png)
 
+Then let us see, how the Boruta method works;
 
 FeatureSelection(data, method = "Boruta" )
+
+Then let us see, how the MRMR method works;
 
 FeatureSelection(data, method = "MRMR", K = 4)
 
