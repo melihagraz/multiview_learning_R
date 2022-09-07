@@ -26,12 +26,12 @@ FeatureSelection(data, method = "MRMR", K = 4)
 
 ## Baseline 
 
-You can run conventional machine learning algorithms (logistic regression, naive bayes, random forest, support vector machine, xgboost) with ```main_baseline.R``` code. ```baseline.R``` is a code that shows how to run the main ```main_baseline.R``` code.
+You can run conventional machine learning algorithms (logistic regression, naive bayes, random forest, support vector machine, xgboost) with ```MainBaseline.R``` code. ```baseline.R``` is a code that shows how to run the main ```MainBaseline.R``` code.
 
 
 ## Cotraining 
 
-```main_cotraining.R``` is the main code of the self-learning algorithm.
+```MainCotraining.R``` is the main code of the self-learning algorithm.
 This code gives you an opportunity to run self learning algorithm only for 
 Naive Bayes and Random Forest Model. You must type method="Naive Bayes" or 
 method="Random Forest" to select machine learning models. If your data is imbalanced, 
