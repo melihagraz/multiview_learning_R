@@ -64,7 +64,7 @@ The functions in the ```HelperFunctions.R```  are;
 
 ```data_summary``` calculates the mean and standard deviation of the tabulated data.
 
-```FeatureSelection``` includes "Boruta" and "Lasso" feature selection algorithms.
+```FeatureSelection``` includes "Lasso", "Boruta" and "MRMR"  feature selection algorithms.
 
 ```plot_Co``` ```plot Co``` plots the figures of multi-view co training algorithm.
 
