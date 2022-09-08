@@ -44,7 +44,7 @@ library(randomForest)
 library(ggplot2)
 library(ggpubr)
 library(gridExtra)
-source("helper_functions.R")
+source("HelperFunctions.R")
 #------------------------------------------------------- main function
 MultiViewCoTraininig<-
   function(lab, unlabeled, method = c("nb", "rf"), train_prob = 0.8,

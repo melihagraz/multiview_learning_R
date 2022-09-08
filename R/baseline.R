@@ -49,7 +49,7 @@ ConventionalMacLearn <- function(dataL, method = c("logreg", "nb", "rf", "svm", 
                             feature_sel = c("Lasso", "Boruta", "MRMR", "Medical Selected"),
                             n_fold = 5, seed = NULL, ...){
 
-  source("helper_functions.R")
+  source("HelperFunctions.R")
 
   FS_method <- match.arg(feature_sel)
 

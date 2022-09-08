@@ -174,7 +174,7 @@ data_summary<-function(data){
 
 
 
-feature_selection <- function(data, method = c("Lasso", "Boruta", "MRMR"), K = NULL, ... ){
+FeatureSelection <- function(data, method = c("Lasso", "Boruta", "MRMR"), K = NULL, ... ){
   #---------------------------------------------------------------------library
 
   if(!require(dplyr)){install.packages("dplyr");require(dplyr)}

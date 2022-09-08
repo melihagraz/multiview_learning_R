@@ -6,7 +6,7 @@ setwd(".../R")
 library(dplyr)
 library(xtable)
 source("helper_functions.R")
-source("multi_view_cotraining.R")
+source("MultiViewCotraining.R")
 #---------------------------------------------------------------------------------------------NB
 setwd("/Users/melihagraz/Documents/GitHub/multiview_learning_R/data")
 setwd(".../data")

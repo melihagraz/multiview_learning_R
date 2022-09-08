@@ -42,7 +42,7 @@ library(praznik)
 library(e1071)
 library(gridExtra)
 library(PRROC)
-source("helper_functions.R")
+source("HelperFunctions.R")
 
 #----- Internal function ------#
 
