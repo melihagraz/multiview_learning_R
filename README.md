@@ -5,21 +5,39 @@ This project provides a structure of folders and files for Multi-view Learning A
 
 ```cotraining.R```; self-training machine learning part and
 
-```multi-view_cotraining.R``` ; multi-view co-training machine learning parts.
+```MultiViewCotraining.R``` ; multi-view co-training machine learning parts.
 
-```main_baseline.R```, ```main_cotraining.R``` and ```main_multi-view.R``` are the main part of the conventional, self training and multi-view cotraining machine learning analysis, respectively.
+```MainBaseline.R```, ```MainCotraining.R``` and ```MainMultiView.R``` are the main part of the conventional, self training and multi-view cotraining machine learning analysis, respectively.
 
 ## Feature selection
-TODO
+We are applying 3 different feature selection algorithm namely LASSO, Boruta and MRMR. MRMR was first introduced by Peng et al. in 2005, this proposed method maximizes the relevance of selected features while minimizing their redundancy. Afterwards various variants of MRMR were developed. UBER research scientist Zhao et al. introduced several MRMR methods such as MID, MIQ, FCD, FCQ, FRQ, RFCQ, and RFRQ. Since FCQ is faster and more effective than other methods, we focus on this method in this article. First let us see, how the LASSO method works;
+
+``` FeatureSelection(data, method = "Lasso" )```
+
+You can see the selected features from the ACCORD data below;
+
+[1] "fpg_mean"            "fpg_std"             "hba1c_mean"                   
+[4] "g1check_mean"        "g1diabed_mean"       "g1diabed_std"        "g1nutrit_std"       
+[8] "sulfonylurea_mean"   "nphl_insulin_mean"   "othbol_insulin_mean" "premix_insulin_mean"
+
+![Rplot](https://user-images.githubusercontent.com/37498443/188721984-6aaffe1f-85c3-494c-86d6-72fd26c020bc.png)
+
+Then let us see, how the Boruta method works;
+
+```FeatureSelection(data, method = "Boruta" )```
+
+Then let us see, how the MRMR method works;
+
+```FeatureSelection(data, method = "MRMR", K = 4)```
 
 ## Baseline 
 
-You can run conventional machine learning algorithms (logistic regression, naive bayes, random forest, support vector machine, xgboost) with ```main_baseline.R``` code. ```baseline.R``` is a code that shows how to run the main ```main_baseline.R``` code.
+You can run conventional machine learning algorithms (logistic regression, naive bayes, random forest, support vector machine, xgboost) with ```MainBaseline.R``` code. ```baseline.R``` is a code that shows how to run the main ```MainBaseline.R``` code.
 
 
 ## Cotraining 
 
-```main_cotraining.R``` is the main code of the self-learning algorithm.
+```MainCotraining.R``` is the main code of the self-learning algorithm.
 This code gives you an opportunity to run self learning algorithm only for 
 Naive Bayes and Random Forest Model. You must type method="Naive Bayes" or 
 method="Random Forest" to select machine learning models. If your data is imbalanced, 
@@ -35,16 +53,16 @@ You can run the main code with ```cotraining.R``` code.
 
 ## Multi-view Cotraining
 
-```multi-view_cotraining.R``` is the main code of the multi-view co training algorithm. This code is written according to Blum and Mitchell (1998) paper. This code gives you an opportunity to run multi-view learning algorithm only for Naive Bayes and Random Forest Model. You must type method="Naive Bayes" or method="Random Forest" to run machine learning models. You can split the data as train/test with typing train_prob = 0.8. Number of pool from the unlabeled data can be assigned typing asn_subPool=75 and number of iteration is fixed as 30 as typing n_iteration=30. If your data is imbalanced, you must type imbalanced=TRUE to fix it, otherwise imbalanced=FALSE. If you want to continuous with MRMR selected features, you must type feature_sel=TRUE. You can choose the number of folds by n_fold, default is 5. You can specify how many negative and positive confidence pseudo features can be selected by typing n_neg and n_pos, respectively.
+```MultiViewCotraining.R``` is the main code of the multi-view co training algorithm. This code is written according to Blum and Mitchell (1998) paper. This code gives you an opportunity to run multi-view learning algorithm only for Naive Bayes and Random Forest Model. You must type method="Naive Bayes" or method="Random Forest" to run machine learning models. You can split the data as train/test with typing train_prob = 0.8. Number of pool from the unlabeled data can be assigned typing asn_subPool=75 and number of iteration is fixed as 30 as typing n_iteration=30. If your data is imbalanced, you must type imbalanced=TRUE to fix it, otherwise imbalanced=FALSE. If you want to continuous with MRMR selected features, you must type feature_sel=TRUE. You can choose the number of folds by n_fold, default is 5. You can specify how many negative and positive confidence pseudo features can be selected by typing n_neg and n_pos, respectively.
 
-You can run the main multi-view code with ```multi-view_cotraining.R```. 
+You can run the main multi-view code with ```MultiViewCotraining.R```. 
 
 
-## ```helper_functions.R```
+## ```HelperFunctions.R```
 
-```helper_functions.R``` is a code that contains auxiliary functions to the main functions.
+```HelperFunctions.R``` is a code that contains auxiliary functions to the main functions.
 
-The functions in the ```helper_functions.R```  are;
+The functions in the ```HelperFunctions.R```  are;
 
 ```balanced_Co``` is created to fix imbalanced problem in multi-view cotraining algorithm.
 
@@ -52,7 +70,7 @@ The functions in the ```helper_functions.R```  are;
 
 ```data_summary``` calculates the mean and standard deviation of the tabulated data.
 
-```feature_selection``` includes "Boruta" and "Lasso" feature selection algorithms.
+```FeatureSelection``` includes "Lasso", "Boruta" and "MRMR"  feature selection algorithms.
 
 ```plot_Co``` ```plot Co``` plots the figures of multi-view co training algorithm.
 
