@@ -4,19 +4,21 @@ cat("\014")
 #---------------------------------------------------------------# packages
 library(dplyr)
 library(xtable)
+setwd("/Users/melihagraz/Documents/GitHub/multiview_learning_R/R")
 source("baseline.R")
 
 #---------------------------------------------------------------# read the data
-setwd("...\data")
+
+
+dataL<-read.csv("lab_view1_2_3_labeled.csv") %>% 
+  dplyr :: select(-c(X, MaskID))
 
 # Table 1: Comparison of results for baseline models using the medical selected ACCORD data
 # using over-sampling. NPV; Negative predictive model, PPV;Positive predictive model, 
 # Spec.; Specificity, Sens.; Sensitivity. 
 
+setwd("/Users/melihagraz/Documents/GitHub/multiview_learning_R/outputBase")
 # Medical Selection
-dataL<-read.csv("lab_view1_2_3_labeled.csv") %>% 
-  dplyr :: select(-c(X, MaskID))
-
 LR_ms <- ConventionalMacLearn(dataL = dataL, method = "logreg", imbalanced = TRUE,
                            feature_sel = "Medical Selected", n_fold = 5,seed = 123)
 LR_ms 

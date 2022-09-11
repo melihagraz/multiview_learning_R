@@ -283,7 +283,162 @@ FeatureSelection <- function(data, method = c("Lasso", "Boruta", "MRMR"), K = NU
   }
   return(fin_sel)
 }
+#------------------------------------------------------------------------------- MRMR
+#-------------------------------------------------------------------------------Separately MRMR
+# output/response variable needs to be at the end of the dataset
+# namely out
 
+MRMR <- function(data, number_features = 3){
+  K<-number_features
+  data_raw<-data
+  #data_F: calculating F score
+  data_F<-data.frame(Variables = colnames(data_raw),
+                     F_stat  = 0, cor=0.0001, MRMR=0)
+  data_F<-data_F[1:(dim(data_raw)[2]-1),] # -1 because dropping the output
+  y<-data_raw[,(dim(data_raw)[2])] # output
+  # now Calculating the F-statistics
+  for (i in 1:(dim(data_raw)[2]-1)) {
+    x<-data_raw[,i]
+    data<-data.frame(x, y)
+    fit<-lm(x ~ y, data = data)
+    summary(fit)
+    RSS0 <- sum((x - mean(x))^2)
+    RSS <- sum(fit$residuals^2) 
+    p <-  1 #predictors whos coefficient we are testing
+    n <- length(y) #number of observations
+    res_F <- ((RSS0-RSS)/p ) / (RSS/(n-p-1))
+    options("scipen"=100, "digits"=4)
+    data_F[i,2]<-res_F
+  }
+  X<-data_raw %>% 
+    dplyr:: select(-out)
+  cor_X<- cor(X)
+  selected<-c()
+  not_selected<-names(X)
+  
+  # the real MRMR part 
+  for (i in 1:K) {
+    if(i==1){
+      # first step is different than the other steps
+      #since we have not selected any features yet, we have assigned the corr
+      # as cor=0.0001 above between selected features and other variables
+      data_F$MRMR     =  data_F$F_stat/data_F$cor
+      data_F <- data_F  %>% arrange(desc(MRMR))
+      selected   <-  data_F[1,"Variables"] 
+      data_F<-data_F[-1,]
+      not_selected<- data_F[,1]
+    }else{
+      data_F$cor<-NULL
+      data_F$MRMR<-NULL 
+      # correlation between selected features and other variables
+      cor_den<-apply(abs(cor(data_raw[,not_selected],data_raw[,selected])),1,mean)
+      
+      data_cor<-data.frame(Variables=names(cor_den),
+                           cor=cor_den)
+      data_F<-left_join(data_F, data_cor, "Variables")
+      data_F$MRMR<-data_F$F_stat/data_F$cor
+      data_F <- data_F  %>% arrange(desc(MRMR)) # sorting in descending order
+      selected   <-  append(selected, data_F[ 1,"Variables"] )
+      data_F<-data_F[-1,]
+      not_selected<- data_F[,1] 
+    }
+  }
+  fin_sel = selected
+  return(fin_sel)
+}
+
+#------------------------------------------------------------------------------- AUC vs Number of Features
+# we need to specify the number of features, we are specifying it here
+source("/Users/melihagraz/Documents/GitHub/multiview_learning_R/R/HelperFunctions.R")
+ix<-1
+selectFeatures <- function(data ){
+  
+  fin_nbauc <- numeric()
+  #i) MRMR doesnot work for the full data
+  for (ix in 1:(dim(data)[2]-2)) {
+    
+    res_MRMR <- MRMR(data,number_features = ix )
+    data_sub <- data[, c(res_MRMR, "out")]
+    head(data_sub)
+    type.id<-1
+    data_sub$out<- as.factor(data_sub$out)
+    lvls = levels(data_sub$out)
+    lvls
+    #output
+    type          =  as.factor(data_sub$out == lvls[type.id])
+    type
+    mytarget <- "type"
+    # x
+    xnam <- colnames(data_sub)[-which(colnames(data_sub)=="out")]
+    xnam
+    #formula
+    fmla <- as.formula(paste("type ~ ", paste(xnam, collapse= "+")))
+    fmla
+    
+    
+    nbmodel       =  NaiveBayes(fmla, data=data_sub)
+    nbprediction  =  predict(nbmodel, data_sub, type='raw')
+    score = nbprediction$posterior[, 'TRUE']
+    actual.class = data_sub$out== lvls[type.id]
+    
+    pred   = prediction(score, actual.class)
+    pred
+    nbauc = performance(pred, "auc")
+    nbauc
+    nbauc = unlist(slot(nbauc, "y.values"))
+    nbauc
+    fin_nbauc[ix] = round(nbauc,3)
+    fin_nbauc
+  }
+  
+  # ii) for the full data
+  
+  type.id<-1
+  data$out<- as.factor(data$out)
+  lvls = levels(data$out)
+  lvls
+  #output
+  type          =  as.factor(data$out == lvls[type.id])
+  type
+  mytarget <- "type"
+  # x
+  xnam <- colnames(data)[-which(colnames(data)=="out")]
+  xnam
+  #formula
+  fmla <- as.formula(paste("type ~ ", paste(xnam, collapse= "+")))
+  fmla
+  
+  
+  nbmodel       =  NaiveBayes(fmla, data=data)
+  nbprediction  =  predict(nbmodel, data, type='raw')
+  score = nbprediction$posterior[, 'TRUE']
+  actual.class = data$out== lvls[type.id]
+  
+  pred   = prediction(score, actual.class)
+  pred
+  nbauc = performance(pred, "auc")
+  nbauc
+  nbauc = unlist(slot(nbauc, "y.values"))
+  nbauc
+  fin_nbauc_full_data = round(nbauc,3)
+  fin_nbauc<-append(fin_nbauc, fin_nbauc_full_data)
+  
+  
+  return(  fin_nbauc)
+}
+# setwd("/Users/melihagraz/Documents/GitHub/multiview_learning_R/data")
+data<-read.csv("lab_view1_2_3_labeled.csv")
+
+res<-selectFeatures(data = data) 
+feat<-c(1:length(res))
+plot(x=NA, y=NA, xlim=c(0,20), ylim=c(0.5,0.8),
+     xlab='number of features',
+     ylab='AUC',
+     bty='n')
+
+pic <- lines(res ~ feat, col = 2, lwd=2)
+
+title(main =  "AUC vs Number of Features Selected by  \n  MRMR Method")
 
 #------------------------------------------------------------------------------- PLOT CO
 

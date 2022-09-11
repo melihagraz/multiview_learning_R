@@ -266,21 +266,17 @@ MultiViewCoTraininig<-
         #----------------------------------------------------------------------------- UPDATE
         #v1
         unlab_pred_u1 <- cbind(unlab_subpool1 , pr = naiv_pre_v1[, 1])
-        head(unlab_pred_u1)
-        tail(unlab_pred_u1)
         unlab_pred_u1$out <- ifelse(unlab_pred_u1$pr > 0.5, 0, 1)
         unlab_pred_u1 <- unlab_pred_u1[order(-unlab_pred_u1$pr), ]
         #v2
         unlab_pred_u2 <- cbind(unlab_subpool2 , pr = naiv_pre_v2[, 1])
-        head(unlab_pred_u2)
-        tail(unlab_pred_u2)
         unlab_pred_u2$out <- ifelse(unlab_pred_u2$pr > 0.5, 0, 1)
         unlab_pred_u2 <- unlab_pred_u2[order(-unlab_pred_u2$pr), ]
         #--------------------------------------------------------------------------- update labels
         n_u1_pred <- dim(unlab_pred_u1)[1]
          
-        # sometimes we wouldnot have 0 or 1 outputs in the prediction of unlabeled
-        # data, we are checking that
+        # sometimes we donot have 0 or 1 labels in the prediction of unlabeled
+        # data, we are checking that we have enough 0 and 1 
         sum_neg_out<- sum(unlab_pred_u1[c(1:n_neg),"out"])
         sum_pos_out<- sum(unlab_pred_u1[seq(n_u1_pred, 1, -1)[1:n_pos],"out"])
         
@@ -288,11 +284,8 @@ MultiViewCoTraininig<-
         if(sum_pos_out != n_pos){ n_pos=sum_pos_out}
         
         sel_u1 <-
-          unlab_pred_u1[c(1:n_neg, seq(n_u1_pred, 1, -1)[1:n_pos]),]
-        # if (sel_u1$out[(n_neg + n_pos)] != 1) {
-        #   sel_u1 <-  sel_u1[-(n_neg + n_pos),]
-        # }
-        
+          unlab_pred_u1[c(0:n_neg, seq(n_u1_pred, 1, -1)[0:n_pos]),]
+    
         unlab_subpool1_drop  <- unlab_subpool1[-which(unlab_subpool1$MaskID %in%
                                   c(sel_u1$MaskID)),]
         set.seed(seed)
@@ -316,8 +309,8 @@ MultiViewCoTraininig<-
         
         
         sel_u2 <- 
-          unlab_pred_u2[c(1:n_neg,   seq(n_u2_pred, 1, -1)[1:n_pos]),]
-        sel_u2
+          unlab_pred_u2[c(0:n_neg,   seq(n_u2_pred, 1, -1)[0:n_pos]),]
+ 
         # if (sel_u2$out[(n_neg + n_pos)] != 1) {
         #   sel_u2 <-  sel_u2[-(n_neg + n_pos),]
         # }
@@ -333,6 +326,7 @@ MultiViewCoTraininig<-
         # update View2
         add_view1 <- sel_u2[colnames(train_view1)]
         new_view1_lab <- rbind(train_view1, add_view1)
+        
         #------------------------------------------------------------------------------- Final Update
         train_view1 <- new_view1_lab
         train_view2 <- new_view2_lab
@@ -361,7 +355,7 @@ MultiViewCoTraininig<-
     # PLOT
     SpecCV_fin1 <-    data_summary(SpecCV_v1)
     SpecCV_fin2 <-    data_summary(SpecCV_v2)
-    Nit <- dim(SensCV_fin1)[1]
+
     
     SpecCV_fin <-
       data.frame(
@@ -466,6 +460,7 @@ MultiViewCoTraininig<-
         Sd = c(TN_fin1[, 3], TN_fin2[, 3]) )
     plot_Co( TN_fin, name = "Sensitivity" , feature_sel = feature_sel,
       method =  method, format = ".pdf" )
+    
     # FP
     FP_fin1 <-    data_summary(FP_v1)
     FP_fin2 <-    data_summary(FP_v2)
@@ -493,18 +488,19 @@ MultiViewCoTraininig<-
       method =  method, format = ".pdf" )
     #-----------------------------------------------------------TP-TN-FP-FN
     TPNF_v1 <- rbind(TP_v1, TN_v1, FP_v1, FN_v1)
-    rownames(TPNF_v1) <-
-      c( paste0(1:n_fold, c("TP")), paste0(1:n_fold, c("TN")),
+    rownames(TPNF_v1) <- c( paste0(1:n_fold, c("TP")), paste0(1:n_fold, c("TN")),
         paste0(1:n_fold, c("FP")), paste0(1:n_fold, c("FN")) )
     colnames(TPNF_v1) <- paste0("it", 1:(iterations - 1))
     
     saver(  TPNF_v1, name = "ConMatrix", format =  ".csv",
       main_method = "COV1", method = method, feature_sel = feature_sel )
+    
     TPNF_v2 <- rbind(TP_v2, TN_v2, FP_v2, FN_v2)
     rownames(TPNF_v2) <-
       c(paste0(1:n_fold, c("TP")), paste0(1:n_fold, c("TN")),
         paste0(1:n_fold, c("FP")),  paste0(1:n_fold, c("FN")) )
     colnames(TPNF_v2) <- paste0("it", 1:(iterations - 1))
+    
     saver(  TPNF_v2, name = "ConMatrix", format =  ".csv",
       main_method = "COV1", method = method, feature_sel = feature_sel )
     first_last <-
@@ -601,6 +597,8 @@ MultiViewCoTraininig<-
     conf_mat_null_v2<- conf_mat_null_v2[-c(1,2),]   
     
     
-    return( list( first_last = first_last, test_fin1 = test_fin1, Conc_AND = Conc_AND2,
-        Conc_OR = Conc_OR2, confusion_matrix_v1=conf_mat_null_v1,confusion_matrix_v2=conf_mat_null_v2  ))
+    return(list(  first_last = first_last, test_fin1=test_fin1,
+                  Conc_AND=Conc_AND2, Conc_OR=Conc_OR2, 
+                  confusion_matrix_V1=conf_mat_null_v1,
+                  confusion_matrix_V2=conf_mat_null_v2))
   }# function
