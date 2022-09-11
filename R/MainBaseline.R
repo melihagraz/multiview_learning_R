@@ -130,3 +130,14 @@ RF_mr <- ConventionalMacLearn(dataL = dataL, method = "rf", imbalanced = TRUE,
 RF_mr
 
 round(rbind(LR_mr, XgB_mr, NB_mr, SVM_mr, RF_mr),3)
+
+
+
+
+# table 1 
+
+round(rbind(LR_ls, XgB_ls, NB_ls, SVM_ls, RF_ls),3)
+
+round(rbind(LR_br, XgB_br, NB_br, SVM_br, RF_br),3)
+
+round(rbind(LR_mr, XgB_mr, NB_mr, SVM_mr, RF_mr),3)
