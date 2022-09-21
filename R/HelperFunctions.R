@@ -225,7 +225,7 @@ FeatureSelection <- function(data, method = c("Lasso", "Boruta", "MRMR"), K = NU
     
     
   } else{ # MRMR
-    K<-number_features
+    number_features <- K
     data_raw<-data
     #data_F: calculating F score
     data_F<-data.frame(Variables = colnames(data_raw),
