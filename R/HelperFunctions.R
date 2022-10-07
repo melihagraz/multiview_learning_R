@@ -187,7 +187,8 @@ FeatureSelection <- function(data, method = c("Lasso", "Boruta", "MRMR"), K = NU
     #define response variable
     y <- data$out
     
-    x <- data.matrix(data %>% select(-out))
+    x <- data.matrix(data %>% 
+                     dplyr::select(-out))
     
     cv_model <- cv.glmnet(x, y, alpha = 1)
     
