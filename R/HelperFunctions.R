@@ -222,7 +222,7 @@ FeatureSelection <- function(data, method = c("Lasso", "Boruta", "MRMR"), K = NU
       main = "Variable Importance"
     )
     
-    
+ 
     
   } else{ # MRMR
     number_features <- K
@@ -251,7 +251,7 @@ FeatureSelection <- function(data, method = c("Lasso", "Boruta", "MRMR"), K = NU
     cor_X<- cor(X)
     selected<-c()
     not_selected<-names(X)
-    
+    i<-1
     # the real MRMR part 
     for (i in 1:K) {
       if(i==1){

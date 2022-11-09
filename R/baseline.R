@@ -42,6 +42,7 @@ library(xgboost)
 library(ROSE)
 library(praznik)
 library(gridExtra)
+library(pROC)
 
 #----- Internal function ------#
 ConventionalMacLearn <- function(dataL, method = c("logreg", "nb", "rf", "svm", "xgb"),
@@ -80,13 +81,14 @@ ConventionalMacLearn <- function(dataL, method = c("logreg", "nb", "rf", "svm", 
   
   CV.Sensitivity <- CV.Specifity <- numeric()
   CV.PPV <- CV.NPV <- numeric()
-  CV.Accuracy <- CV.F.score <- numeric()
+  CV.AUC <- CV.Accuracy <- CV.F.score <- numeric()
 
   if (!is.null(seed)){
     set.seed(seed)
   }
   folds <- createFolds(dataL$out, k = n_fold)
   method <- match.arg(method)
+
   for (i_cv in 1:n_fold) {
 
     testIndex <- folds[[i_cv]]
@@ -110,6 +112,9 @@ ConventionalMacLearn <- function(dataL, method = c("logreg", "nb", "rf", "svm", 
       modelFit <- glm(out ~ ., data = trainset, family = "binomial")
       predicted <- modelFit %>%
         predict(testset, type = "response")
+      par(pty = "m")
+      auc_res<-roc(testset$out, predicted, plot=TRUE,print.auc=TRUE)
+      CV.AUC[i_cv]<-auc_res$auc[1]
       predicted <- ifelse(predicted > 0.5, 1, 0)
     }
 
@@ -118,7 +123,11 @@ ConventionalMacLearn <- function(dataL, method = c("logreg", "nb", "rf", "svm", 
       modelFit <- naiveBayes(as.factor(out) ~ .,
                              data = trainset,
                              usekernel = T)
+      par(pty = "m")
       predicted <- predict(modelFit, testset)
+      predict_num<-as.numeric(as.character(predicted))
+      auc_res<-roc(testset$out, predict_num, plot=TRUE,print.auc=TRUE)
+      CV.AUC[i_cv]<-auc_res$auc[1]
     }
     if (method == "xgb") {
       #------------------------------------------------------------------------# XGBOOST
@@ -131,6 +140,10 @@ ConventionalMacLearn <- function(dataL, method = c("logreg", "nb", "rf", "svm", 
       predicted <- predict(modelFit,
                            newdata =  as.matrix(testset[-x6]),
                            type = "response")
+      par(pty = "m")
+      auc_res<-roc(testset$out, 
+                   predicted, plot=TRUE,print.auc=TRUE)
+      CV.AUC[i_cv]<-auc_res$auc[1]
       predicted <- ifelse(predicted > 0.5, 1, 0)
     }
     if (method == "svm") {
@@ -140,7 +153,12 @@ ConventionalMacLearn <- function(dataL, method = c("logreg", "nb", "rf", "svm", 
                          method = "svmLinear",
                          preProcess = c("center", "scale")
       )
+      par(pty = "m")
+
       predicted <- predict(modelFit, testset)
+      predict_num<-as.numeric(as.character(predicted))
+      auc_res<-roc(testset$out, predict_num, plot=TRUE,print.auc=TRUE)
+      CV.AUC[i_cv]<-auc_res$auc[1]
     }
     if (method == "rf") {
       #------------------------------------------------------------------------# RF
@@ -150,12 +168,17 @@ ConventionalMacLearn <- function(dataL, method = c("logreg", "nb", "rf", "svm", 
         method = 'class',
         ntree = 500
       )
+      par(pty = "m")
       predicted <- predict(modelFit, testset, type = "class")
+      predict_num<-as.numeric(as.character(predicted))
+      auc_res<-roc(testset$out, predict_num, plot=TRUE,
+                   print.auc=TRUE)
+      CV.AUC[i_cv]<-auc_res$auc[1]
     }
- 
+
     actual   <- as.factor(testset$out)
     predicted<- as.factor(predicted)
-
+  
     perfMeas <- confMat(actual, predicted, positive = "1")
 
     CV.Sensitivity[i_cv] = perfMeas[["sens"]]
@@ -164,6 +187,7 @@ ConventionalMacLearn <- function(dataL, method = c("logreg", "nb", "rf", "svm", 
     CV.NPV[i_cv] = perfMeas[["npv"]]
     CV.Accuracy[i_cv] = perfMeas[["acc"]]
     CV.F.score[i_cv] = perfMeas[["f1"]]
+    
   }# end fold
   res <- matrix(c(
     mean(CV.NPV, na.rm=TRUE ),
@@ -171,9 +195,10 @@ ConventionalMacLearn <- function(dataL, method = c("logreg", "nb", "rf", "svm", 
     mean(CV.Specifity),
     mean(CV.Sensitivity),
     mean(CV.Accuracy),
-    mean(CV.F.score)
+    mean(CV.F.score),
+    mean(CV.AUC)
   ), nrow = 1)
-  colnames(res) <- c("NPV", "PPV", "Spec", "Sens", "Acc", "F1")
+  colnames(res) <- c("NPV", "PPV", "Spec", "Sens", "Acc", "F1", "AUC")
 
   return(result = res)
 }
