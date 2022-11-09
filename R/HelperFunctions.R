@@ -187,7 +187,8 @@ FeatureSelection <- function(data, method = c("Lasso", "Boruta", "MRMR"), K = NU
     #define response variable
     y <- data$out
     
-    x <- data.matrix(data %>% select(-out))
+    x <- data.matrix(data %>% 
+                     dplyr::select(-out))
     
     cv_model <- cv.glmnet(x, y, alpha = 1)
     
@@ -208,8 +209,11 @@ FeatureSelection <- function(data, method = c("Lasso", "Boruta", "MRMR"), K = NU
                             maxRuns = 200) # to get stable results we need high
     #number of iterations
     
+    final.boruta <-
+      TentativeRoughFix(boruta_output)
+    
     boruta_signif <-
-      getSelectedAttributes(boruta_output, withTentative = TRUE)
+      getSelectedAttributes(final.boruta, withTentative = TRUE)
     
     
     fin_sel<- cat(paste(shQuote(boruta_signif, type = "cmd")))
