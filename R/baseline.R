@@ -95,7 +95,7 @@ ConventionalMacLearn <- function(dataL, method = c("logreg", "nb", "rf", "svm", 
   folds <- createFolds(dataL$out, k = n_fold)
   method <- match.arg(method)
   
-i_cv<-5
+
   for (i_cv in 1:n_fold) {
 
     testIndex <- folds[[i_cv]]
@@ -257,11 +257,11 @@ f3<-len_sens[3]
 f4<-len_sens[4]
 f5<-len_sens[5]
 
-dat1<-  dat[1:(f1+1),]
-dat2<-  dat[((f1+1+1):(f1+1+f2+1)),]
-dat3<-  dat[(f1+1+f2+1+1):(f1+1+f2+1+f3+1),]
-dat4<-  dat[(f1+1+f2+1+f3+1+1):(f1+1+f2+1+f3+1+f4+1),]
-dat5<-  dat[(f1+1+f2+1+f3+1+f4+1+1):(f1+f2+f3+f4+f5+1),]
+dat1<-  dat[1:(f1),]
+dat2<-  dat[((f1+1):(f1+f2)),]
+dat3<-  dat[(f1+f2+1):(f1+f2+f3),]
+dat4<-  dat[(f1+f2+f3+1):(f1+f2+f3+f4),]
+dat5<-  dat[(f1+f2+f3+f4+1):(f1+f2+f3+f4+f5),]
 
 
 
