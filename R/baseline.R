@@ -257,16 +257,17 @@ f3<-len_sens[3]
 f4<-len_sens[4]
 f5<-len_sens[5]
 
-dat1<-  dat[1:(f1),]
-dat2<-  dat[((f1+1):(f1+f2)),]
-dat3<-  dat[(f1+f2+1):(f1+f2+f3),]
-dat4<-  dat[(f1+f2+f3+1):(f1+f2+f3+f4),]
-dat5<-  dat[(f1+f2+f3+f4+1):(f1+f2+f3+f4+f5),]
+dat1<-  dat[1:(f1),] # ROC1 
+dat2<-  dat[((f1+1):(f1+f2)),] # ROC2 
+dat3<-  dat[(f1+f2+1):(f1+f2+f3),]# ROC3 
+dat4<-  dat[(f1+f2+f3+1):(f1+f2+f3+f4),]# ROC4 
+dat5<-  dat[(f1+f2+f3+f4+1):(f1+f2+f3+f4+f5),]# ROC5 
 
 
 
-gg_ROC<-ggplot()+
-  geom_line(data=dat1, aes(1-spec, sens, color="ROC1"),size = 0.5, alpha = 0.5)+
+  
+gg_ROC <- ggplot()+
+  geom_line(data=dat1, aes(1-spec, sens,color="ROC1"),size = 0.5, alpha = 0.5)+
   geom_line(data=dat2, aes(1-spec, sens,color="ROC2"),size = 0.5, alpha = 0.7)+
   geom_line(data=dat3, aes(1-spec, sens,color="ROC3"),size = 0.8, alpha = 0.7)+
   geom_line(data=dat4, aes(1-spec, sens,color="ROC4"),size = 0.8, alpha = 0.7)+
@@ -276,12 +277,19 @@ gg_ROC<-ggplot()+
     'ROC2' = "#D16103",
     'ROC3' = "#52854C",
     'ROC4' = "#4E84C4",
-    'ROC5' = "#293352")) +
+    'ROC5' = "red")
+    ) +
   labs(color = paste( "mean AUC", round(mean( CV.AUC),4)),
        x = "False Positive Rate (1-Specificity)", 
        y = "True Positive Rate (Sensitivity)"  )+
-  theme(legend.position = c(.8, .2))
+  theme(legend.position = c(.8, .2))+
+  geom_line() +
+  geom_segment(aes(y = 0, 
+                   yend = 1, 
+                   x = 0,  
+                   xend = 1,color = "grey50"))
 
+gg_ROC 
 
   res <- matrix(c(
     mean(CV.NPV, na.rm=TRUE ),
