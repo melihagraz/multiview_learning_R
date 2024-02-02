@@ -7,7 +7,7 @@ library(dplyr)
 library(xtable)
 
 
-setwd("/Users/melihagraz/Desktop/multiview/march10_2")
+setwd("set_your_folder_here")
 
 #labeled data
 dataL<-read.csv("lab_view1_2_3_labeled.csv") %>% 
